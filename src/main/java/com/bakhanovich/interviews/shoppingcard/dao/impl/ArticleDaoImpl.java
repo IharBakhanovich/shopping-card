@@ -109,6 +109,10 @@ public class ArticleDaoImpl implements ArticleDao {
         }
     }
 
+    //todo make a method that reduced the amount of the article when the article is booked by user
+
+    //todo: make a method that returns amount of articles into database, if user rejected from the article or user deleted from db
+
 //    /**
 //     * Finds the most popular {@link Article} of the {@link User}
 //     * with the biggest sum of order price.

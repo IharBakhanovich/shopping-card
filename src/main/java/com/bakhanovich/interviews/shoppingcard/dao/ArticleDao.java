@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The interface, that implements DAO for the Article entity.
+ * The interface, that implements DAO for the {@link Article} entity.
  *
  * @author Ihar Bakhanovich
  */
