@@ -1,4 +1,4 @@
-1. Entity-Relationschip Diagramme:
+1. Entity-Relationschip Diagramme (sieh die 'ER_Diagramm.JPG' Datei):
     ![](C:\Studium\Interviews\ShoppingCard\ER_diagramm.JPG)
 2. Convertierung ER-Diagramm to Entity-Typen
 
@@ -28,7 +28,7 @@
 
         entfällt
 
-3. Tabelle
+3. Tabelle (sieh die 'tables.jpg' Datei)
 
     ![](C:\Studium\Interviews\ShoppingCard\tables.jpg)
 
