@@ -9,6 +9,8 @@ import java.util.List;
 
 /**
  * The POJO that describes the {@link User} entity in the system.
+ *
+ * @author Ihar Bakhanovich
  */
 @ToString
 @EqualsAndHashCode

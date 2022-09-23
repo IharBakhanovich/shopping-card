@@ -10,6 +10,8 @@ import java.io.Serializable;
 
 /**
  * The POJO that describes the {@link Article} entity in the system.
+ *
+ * @author Ihar Bakhanovich
  */
 @Data
 @NoArgsConstructor

@@ -1,4 +1,5 @@
 Für die Aufgabe können beliebige Technologien verwendet werden. Favorisiert werden fürs Backend Java und NodeJS.
+
 Warenkorb
 
 Aufgabe ist es, einen rudimentären Warenkorb zu implementieren. Es reicht aus, wenn die Funktionalitäten über eine API angesprochen werden.

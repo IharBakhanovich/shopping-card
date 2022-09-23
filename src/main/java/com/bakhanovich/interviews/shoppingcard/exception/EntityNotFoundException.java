@@ -2,6 +2,8 @@ package com.bakhanovich.interviews.shoppingcard.exception;
 
 /**
  * Exception: Thrown if an entity was not found.
+ *
+ * @author Ihar Bakhanovich
  */
 public class EntityNotFoundException extends AppException{
     /**

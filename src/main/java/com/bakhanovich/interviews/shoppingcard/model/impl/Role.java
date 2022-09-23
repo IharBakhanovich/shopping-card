@@ -9,6 +9,8 @@ import java.util.List;
 
 /**
  * Implements roles of the {@link User}.
+ *
+ * @author Ihar Bakhanovich
  */
 public enum Role implements DatabaseEntity {
     ROLE_UNAUTHORIZED(0L),
