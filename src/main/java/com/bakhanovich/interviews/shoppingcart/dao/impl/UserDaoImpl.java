@@ -1,8 +1,8 @@
-package com.bakhanovich.interviews.shoppingcard.dao.impl;
+package com.bakhanovich.interviews.shoppingcart.dao.impl;
 
-import com.bakhanovich.interviews.shoppingcard.dao.UserDao;
-import com.bakhanovich.interviews.shoppingcard.model.impl.Article;
-import com.bakhanovich.interviews.shoppingcard.model.impl.User;
+import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
+import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
+import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

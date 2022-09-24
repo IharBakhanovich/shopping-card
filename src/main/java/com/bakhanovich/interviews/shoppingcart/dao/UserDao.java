@@ -1,8 +1,8 @@
-package com.bakhanovich.interviews.shoppingcard.dao;
+package com.bakhanovich.interviews.shoppingcart.dao;
 
 
-import com.bakhanovich.interviews.shoppingcard.model.impl.Article;
-import com.bakhanovich.interviews.shoppingcard.model.impl.User;
+import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
+import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 
 import java.util.List;
 import java.util.Optional;

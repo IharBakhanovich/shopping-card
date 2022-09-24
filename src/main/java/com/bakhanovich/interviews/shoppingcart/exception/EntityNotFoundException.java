@@ -1,4 +1,4 @@
-package com.bakhanovich.interviews.shoppingcard.exception;
+package com.bakhanovich.interviews.shoppingcart.exception;
 
 /**
  * Exception: Thrown if an entity was not found.

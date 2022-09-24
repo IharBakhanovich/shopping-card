@@ -1,6 +1,6 @@
-package com.bakhanovich.interviews.shoppingcard.model.impl;
+package com.bakhanovich.interviews.shoppingcart.model.impl;
 
-import com.bakhanovich.interviews.shoppingcard.model.DatabaseEntity;
+import com.bakhanovich.interviews.shoppingcart.model.DatabaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

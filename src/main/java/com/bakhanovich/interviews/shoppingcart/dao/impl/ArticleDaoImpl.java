@@ -1,8 +1,8 @@
-package com.bakhanovich.interviews.shoppingcard.dao.impl;
+package com.bakhanovich.interviews.shoppingcart.dao.impl;
 
-import com.bakhanovich.interviews.shoppingcard.dao.ArticleDao;
-import com.bakhanovich.interviews.shoppingcard.exception.DuplicateException;
-import com.bakhanovich.interviews.shoppingcard.model.impl.Article;
+import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
+import com.bakhanovich.interviews.shoppingcart.exception.DuplicateException;
+import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

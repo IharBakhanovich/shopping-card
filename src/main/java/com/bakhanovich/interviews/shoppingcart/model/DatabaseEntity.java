@@ -1,4 +1,4 @@
-package com.bakhanovich.interviews.shoppingcard.model;
+package com.bakhanovich.interviews.shoppingcart.model;
 
 /**
  * Implements the DatabaseEntity. The marker interface.

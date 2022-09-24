@@ -1,4 +1,4 @@
-package com.bakhanovich.interviews.shoppingcard.dao.impl;
+package com.bakhanovich.interviews.shoppingcart.dao.impl;
 
 /**
  * Stores names of the database tables columns, which are used by {@link UserExtractor} and

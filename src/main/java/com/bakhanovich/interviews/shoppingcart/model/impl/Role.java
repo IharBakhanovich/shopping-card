@@ -1,8 +1,8 @@
-package com.bakhanovich.interviews.shoppingcard.model.impl;
+package com.bakhanovich.interviews.shoppingcart.model.impl;
 
 
-import com.bakhanovich.interviews.shoppingcard.exception.EntityNotFoundException;
-import com.bakhanovich.interviews.shoppingcard.model.DatabaseEntity;
+import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
+import com.bakhanovich.interviews.shoppingcart.model.DatabaseEntity;
 
 import java.util.Arrays;
 import java.util.List;

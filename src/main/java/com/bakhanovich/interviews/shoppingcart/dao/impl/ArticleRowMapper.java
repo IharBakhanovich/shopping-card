@@ -1,6 +1,6 @@
-package com.bakhanovich.interviews.shoppingcard.dao.impl;
+package com.bakhanovich.interviews.shoppingcart.dao.impl;
 
-import com.bakhanovich.interviews.shoppingcard.model.impl.Article;
+import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

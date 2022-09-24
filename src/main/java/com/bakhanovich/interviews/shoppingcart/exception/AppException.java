@@ -1,4 +1,4 @@
-package com.bakhanovich.interviews.shoppingcard.exception;
+package com.bakhanovich.interviews.shoppingcart.exception;
 
 /**
  * The Main class of the application {@link RuntimeException}.

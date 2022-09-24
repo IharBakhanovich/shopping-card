@@ -1,7 +1,7 @@
-package com.bakhanovich.interviews.shoppingcard.dao;
+package com.bakhanovich.interviews.shoppingcart.dao;
 
-import com.bakhanovich.interviews.shoppingcard.exception.DuplicateException;
-import com.bakhanovich.interviews.shoppingcard.model.DatabaseEntity;
+import com.bakhanovich.interviews.shoppingcart.exception.DuplicateException;
+import com.bakhanovich.interviews.shoppingcart.model.DatabaseEntity;
 
 import java.util.List;
 import java.util.Optional;

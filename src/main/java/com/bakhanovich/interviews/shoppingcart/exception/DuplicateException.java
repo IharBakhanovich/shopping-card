@@ -1,4 +1,4 @@
-package com.bakhanovich.interviews.shoppingcard.exception;
+package com.bakhanovich.interviews.shoppingcart.exception;
 
 /**
  * Exception: Thrown if a database-insertion violates a UNIQUE-constraint.
