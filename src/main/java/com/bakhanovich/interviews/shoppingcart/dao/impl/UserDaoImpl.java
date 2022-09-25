@@ -78,9 +78,7 @@ public class UserDaoImpl implements UserDao {
      * @throws DuplicateException if a SQLException with the state 23505 or the state 23000 is thrown.
      */
     @Override
-    @Transactional
     public void save(User user) {
-        //todo
 //        entityManager.persist(user);
         jdbcTemplate.update(INSERT_ENTITY_SQL,
                 user.getNickName(),
