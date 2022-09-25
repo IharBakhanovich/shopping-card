@@ -15,12 +15,13 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "user")
 @Table(
         schema = "shopping_card",
-        name = "user"
+        name = "app_user"
 )
 public class User implements DatabaseEntity, Serializable {
     @Id

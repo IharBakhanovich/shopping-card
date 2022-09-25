@@ -1,9 +1,7 @@
 package com.bakhanovich.interviews.shoppingcart.model.impl;
 
 import com.bakhanovich.interviews.shoppingcart.model.DatabaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +12,8 @@ import java.io.Serializable;
  * @author Ihar Bakhanovich
  */
 @Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "article")
@@ -26,8 +26,8 @@ public class Article implements DatabaseEntity, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, updatable = false)
     private long id;
-    @Column(name = "preis", unique = true, nullable = false)
-    private int preis;
+    @Column(name = "preis", nullable = false)
+    private float preis;
     @Column(name = "amount", nullable = false)
     private int amount;
 }

@@ -78,13 +78,6 @@ public interface ArticleDao extends Dao<Article> {
      *
      * @param articleId is the id to remove by.
      */
-    void deleteFromUserOrderArticleByArticleId(long articleId);
+    void deleteFromUserOrderedArticleByArticleId(long articleId);
 
-//    /**
-//     * Finds the most popular {@link Article} of the {@link com.bakhanovich.interviews.shoppingcard.model.impl.User}
-//     * with the biggest sum of order price.
-//     *
-//     * @return {@link Optional<Article>}.
-//     */
-//    Optional<Article> findTheMostPopularArticleOfTheUser();
 }

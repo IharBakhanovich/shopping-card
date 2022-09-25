@@ -47,7 +47,7 @@ primary key (id)
 `CREATE TABLE article
 (
 id     INTEGER NOT NULL AUTO_INCREMENT,
-preis  INTEGER NOT NULL,
+preis  FLOAT NOT NULL,
 amount INTEGER NOT NULL,
 primary key (id)
 );`
