@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * The POJO that describes the {@link Article} entity in the system.
@@ -27,7 +28,7 @@ public class Article implements DatabaseEntity, Serializable {
     @Column(name = "id", unique = true, updatable = false)
     private long id;
     @Column(name = "preis", nullable = false)
-    private float preis;
+    private BigDecimal preis;
     @Column(name = "amount", nullable = false)
     private int amount;
 }

@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +69,7 @@ public class ArticleDaoTest {
 
     @Test
     public void testSave() {
-        Article article = new Article(6L, 1.22f, 100);
+        Article article = new Article(6L, BigDecimal.valueOf(1.22f), 100);
         articleDao.save(article);
         Article addedArticle = articleDao.findById(6).get();
         Assertions.assertEquals(article.getAmount(), addedArticle.getAmount());

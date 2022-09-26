@@ -27,7 +27,7 @@ public class ArticleRowMapper implements RowMapper<Article> {
     public Article mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         return new Article(
                 resultSet.getLong(ColumnNames.TABLE_ARTICLE_COLUMN_ID),
-                resultSet.getInt(ColumnNames.TABLE_ARTICLE_COLUMN_PREIS),
+                resultSet.getBigDecimal(ColumnNames.TABLE_ARTICLE_COLUMN_PREIS),
                 resultSet.getInt(ColumnNames.TABLE_ARTICLE_COLUMN_AMOUNT)
         );
     }

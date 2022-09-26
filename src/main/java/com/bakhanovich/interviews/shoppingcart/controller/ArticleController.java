@@ -1,7 +1,6 @@
 package com.bakhanovich.interviews.shoppingcart.controller;
 
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
-import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.service.ArticleService;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
- * API to work with {@link User}s of the ShoppingCart.
+ * API to work with {@link Article}s of the ShoppingCart.
  *
  * @author Ihar Bakhanovich
  */
@@ -39,7 +38,7 @@ public class ArticleController {
     }
 
     /**
-     * The method that realises the 'GET /tags' query.
+     * The method that realises the 'GET /articles' query.
      *
      * @return {@link List<Article>} - all the {@link Article} in the system.
      */
@@ -49,16 +48,11 @@ public class ArticleController {
 
         List<Article> articles = articleService.fetchAllArticles();
 
-//        int pageNumber = Integer.parseInt(parameters.get(ColumnNames.PAGE_NUMBER_PARAM_NAME));
-//        int amountEntitiesOnThePage
-//                = Integer.parseInt(parameters.get(ColumnNames.AMOUNT_OF_ENTITIES_ON_THE_PAGE_PARAM_NAME));
-//        Map<String, String> paramsNext = ColumnNames.createNextParameters(tags, pageNumber, amountEntitiesOnThePage);
-//        Map<String, String> paramsPrev = ColumnNames.createPrevParameters(tags, pageNumber, amountEntitiesOnThePage);
         List<EntityModel<Article>> modelFromArticles = articles.stream().map(article -> EntityModel.of(article,
                         linkTo(methodOn(ArticleController.class).article(article.getId()))
-                                .withRel(translator.toLocale("FETCHES_AND_REMOVES_TAG_HATEOAS_LINK_MESSAGE")),
+                                .withRel(translator.toLocale("FETCHES_ARTICLE_BY_ID_HATEOAS_LINK_MESSAGE")),
                         linkTo(methodOn(ArticleController.class).updateArticle(article.getId(), article))
-                                .withRel(translator.toLocale("UPDATES_TAG_HATEOAS_LINK_MESSAGE"))))
+                                .withRel(translator.toLocale("UPDATES_ARTICLE_HATEOAS_LINK_MESSAGE"))))
                 .collect(Collectors.toList());
         CollectionModel<EntityModel<Article>> collectionModel = CollectionModel.of(modelFromArticles);
 //        collectionModel.add(linkTo(methodOn(CertificateTagController.class).tags(paramsNext)).
@@ -82,12 +76,11 @@ public class ArticleController {
         Article article = articleService.fetchArticleById(articleId);
         EntityModel<Article> orderEntityModel
                 = EntityModel.of(article, linkTo(methodOn(ArticleController.class).articles())
-                .withRel(translator.toLocale(
-                        "FETCHES_MOST_POPULAR_TAG_USER_WITH_HIGHEST_ORDERS_SUM_HATEOAS_LINK_MESSAGE")));
-        orderEntityModel.add(linkTo(methodOn(ArticleController.class).articles())
-                .withRel(translator.toLocale("CREATES_NEW_TAG_HATEOAS_LINK_MESSAGE")));
+                .withRel(translator.toLocale("FETCHES_ALL_ARTICLES_HATEOAS_LINK_MESSAGE")));
+//        orderEntityModel.add(linkTo(methodOn(ArticleController.class).articles())
+//                .withRel(translator.toLocale("FETCHES_ALL_ARTICLES_HATEOAS_LINK_MESSAGE")));
         orderEntityModel.add(linkTo(methodOn(ArticleController.class).updateArticle(article.getId(), article))
-                .withRel(translator.toLocale("REMOVES_TAG_HATEOAS_LINK_MESSAGE")));
+                .withRel(translator.toLocale("UPDATES_ARTICLE_HATEOAS_LINK_MESSAGE")));
         return orderEntityModel.add(linkTo(methodOn(ArticleController.class).article(article.getId())).withSelfRel());
     }
 
@@ -95,21 +88,21 @@ public class ArticleController {
      * The method that realises the 'PUT /tags/{articleId}' query and updates the {@link Article}
      * with the id equals {@param articleId}.
      *
-     * @param article is the {@link Article} to update.
-     * @param articleId          is the id of the {@link Article}, which is to update.
+     * @param article   is the {@link Article} to update.
+     * @param articleId is the id of the {@link Article}, which is to update.
      * @return the updated {@link Article}.
      */
     @PutMapping(value = "/{articleId}")
     @ResponseStatus(HttpStatus.OK)
     public EntityModel<Article> updateArticle(@PathVariable("articleId") long articleId,
-                                                            @RequestBody Article article) {
+                                              @RequestBody Article article) {
 
         Article updatedArticle = articleService.updateArticle(article);
         EntityModel<Article> orderEntityModel
                 = EntityModel.of(updatedArticle, linkTo(methodOn(ArticleController.class)
-                .article(articleId)).withRel(translator.toLocale("FETCHES_AND_REMOVES_TAG_HATEOAS_LINK_MESSAGE")));
+                .article(articleId)).withRel(translator.toLocale("FETCHES_ARTICLE_BY_ID_HATEOAS_LINK_MESSAGE")));
         orderEntityModel.add(linkTo(methodOn(ArticleController.class).articles())
-                .withRel(translator.toLocale("CREATES_NEW_TAG_HATEOAS_LINK_MESSAGE")));
+                .withRel(translator.toLocale("FETCHES_ALL_ARTICLES_HATEOAS_LINK_MESSAGE")));
         return orderEntityModel.add(linkTo(methodOn(ArticleController.class)
                 .updateArticle(articleId, article)).withSelfRel());
     }

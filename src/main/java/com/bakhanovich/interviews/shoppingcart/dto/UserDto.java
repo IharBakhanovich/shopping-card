@@ -7,18 +7,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
  * The DataTransferObject for the {@link User} entity to transfer data outside the system.
+ *
+ * @author Ihar Bakhanovich
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-    private long id;
+    private long userId;
     private String nickname;
-    private float orderCosts;
+    private BigDecimal cartCosts;
     private Role role;
-    List<Article> articles;
+    List<ArticleDto> articles;
 }
