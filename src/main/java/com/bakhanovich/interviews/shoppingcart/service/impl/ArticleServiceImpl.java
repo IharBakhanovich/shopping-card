@@ -1,6 +1,8 @@
 package com.bakhanovich.interviews.shoppingcart.service.impl;
 
+import com.bakhanovich.interviews.shoppingcart.converter.ArticleToArticleDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
+import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
 import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.model.impl.User;
@@ -28,22 +30,25 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleDao articleDao;
     private final ArticleValidator articleValidator;
     private final Translator translator;
+    private final ArticleToArticleDtoConverter articleToArticleDtoConverter;
 
     @Autowired
     public ArticleServiceImpl(ArticleDao articleDao,
                               ArticleValidator articleValidator,
-                              Translator translator) {
+                              Translator translator,
+                              ArticleToArticleDtoConverter articleToArticleDtoConverter) {
         this.articleDao = articleDao;
         this.articleValidator = articleValidator;
         this.translator = translator;
+        this.articleToArticleDtoConverter = articleToArticleDtoConverter;
     }
 
     /**
-     * Returns all {@link Article}s in the system.
+     * Returns all {@link ArticleDto}s in the system.
      */
     @Override
-    public List<Article> fetchAllArticles() {
-        return articleDao.findAll();
+    public List<ArticleDto> fetchAllArticles() {
+        return articleToArticleDtoConverter.convertList(articleDao.findAll());
     }
 
     /**
@@ -52,8 +57,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @param id is the id to find in the system.
      */
     @Override
-    public Article fetchArticleById(long id) {
-        return articleValidator.checkIsArticleExistInTheSystem(id);
+    public ArticleDto fetchArticleById(long id) {
+        return articleToArticleDtoConverter.convert(articleValidator.checkIsArticleExistInTheSystem(id));
     }
 
     /**
@@ -62,9 +67,9 @@ public class ArticleServiceImpl implements ArticleService {
      * @param article is the {@link Article} to update.
      */
     @Override
-    public Article updateArticle(Article article) {
+    public ArticleDto updateArticle(Article article) {
         articleValidator.validateArticle(article);
         articleDao.update(article);
-        return articleDao.findById(article.getId()).get();
+        return articleToArticleDtoConverter.convert(articleDao.findById(article.getId()).get());
     }
 }

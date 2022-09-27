@@ -70,8 +70,8 @@ public class UserServiceImpl implements UserService {
         User userWhomAddArticles = userValidator.checkIsUserExistsInTheSystem(userId);
         articleValidator.validateArticles(articles);
         List<Article> userArticles = userWhomAddArticles.getArticles();
-        for (Article article : articles) {
 
+        for (Article article : articles) {
             Article theSameArticleByUser = findArticleByUser(userArticles, article.getId());
             Article articleFromTheSystem = articleDao.findById(article.getId()).get();
             article.setPreis(articleFromTheSystem.getPreis());
@@ -151,8 +151,6 @@ public class UserServiceImpl implements UserService {
 
     private void returnArticleToStock(Article article) {
         Article articleInSystem = articleDao.findById(article.getId()).get();
-//        Article articleToUpdate = new Article(articleInSystem.getId(), articleInSystem.getPreis(),
-//                articleInSystem.getAmount() + article.getAmount(), articleInSystem.getMinAmount());
         articleInSystem.setAmount(articleInSystem.getAmount() + article.getAmount());
         articleDao.update(articleInSystem);
     }

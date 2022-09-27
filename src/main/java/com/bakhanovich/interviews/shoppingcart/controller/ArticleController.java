@@ -1,5 +1,6 @@
 package com.bakhanovich.interviews.shoppingcart.controller;
 
+import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.service.ArticleService;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
@@ -44,17 +45,16 @@ public class ArticleController {
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public CollectionModel<EntityModel<Article>> articles() {
+    public CollectionModel<EntityModel<ArticleDto>> articles() {
 
-        List<Article> articles = articleService.fetchAllArticles();
-
-        List<EntityModel<Article>> modelFromArticles = articles.stream().map(article -> EntityModel.of(article,
-                        linkTo(methodOn(ArticleController.class).article(article.getId()))
+        List<ArticleDto> articles = articleService.fetchAllArticles();
+        List<EntityModel<ArticleDto>> modelFromArticles = articles.stream().map(articleDto -> EntityModel.of(articleDto,
+                        linkTo(methodOn(ArticleController.class).article(articleDto.getArticleId()))
                                 .withRel(translator.toLocale("FETCHES_ARTICLE_BY_ID_HATEOAS_LINK_MESSAGE")),
-                        linkTo(methodOn(ArticleController.class).updateArticle(article.getId(), article))
+                        linkTo(methodOn(ArticleController.class).updateArticle(articleDto.getArticleId(), new Article()))
                                 .withRel(translator.toLocale("UPDATES_ARTICLE_HATEOAS_LINK_MESSAGE"))))
                 .collect(Collectors.toList());
-        CollectionModel<EntityModel<Article>> collectionModel = CollectionModel.of(modelFromArticles);
+        CollectionModel<EntityModel<ArticleDto>> collectionModel = CollectionModel.of(modelFromArticles);
 //        collectionModel.add(linkTo(methodOn(CertificateTagController.class).tags(paramsNext)).
 //                        withRel(translator.toLocale("FETCHES_NEXT_PAGE_TAG_HATEOAS_LINK_MESSAGE")),
 //                linkTo(methodOn(CertificateTagController.class).tags(paramsPrev)).
@@ -72,16 +72,16 @@ public class ArticleController {
      */
     @GetMapping(value = "/{articleId}")
     @ResponseStatus(HttpStatus.OK)
-    public EntityModel<Article> article(@PathVariable("articleId") long articleId) {
-        Article article = articleService.fetchArticleById(articleId);
-        EntityModel<Article> orderEntityModel
-                = EntityModel.of(article, linkTo(methodOn(ArticleController.class).articles())
+    public EntityModel<ArticleDto> article(@PathVariable("articleId") long articleId) {
+        ArticleDto articleDto = articleService.fetchArticleById(articleId);
+        EntityModel<ArticleDto> orderEntityModel
+                = EntityModel.of(articleDto, linkTo(methodOn(ArticleController.class).articles())
                 .withRel(translator.toLocale("FETCHES_ALL_ARTICLES_HATEOAS_LINK_MESSAGE")));
 //        orderEntityModel.add(linkTo(methodOn(ArticleController.class).articles())
 //                .withRel(translator.toLocale("FETCHES_ALL_ARTICLES_HATEOAS_LINK_MESSAGE")));
-        orderEntityModel.add(linkTo(methodOn(ArticleController.class).updateArticle(article.getId(), article))
+        orderEntityModel.add(linkTo(methodOn(ArticleController.class).updateArticle(articleDto.getArticleId(), new Article()))
                 .withRel(translator.toLocale("UPDATES_ARTICLE_HATEOAS_LINK_MESSAGE")));
-        return orderEntityModel.add(linkTo(methodOn(ArticleController.class).article(article.getId())).withSelfRel());
+        return orderEntityModel.add(linkTo(methodOn(ArticleController.class).article(articleDto.getArticleId())).withSelfRel());
     }
 
     /**
@@ -94,11 +94,11 @@ public class ArticleController {
      */
     @PutMapping(value = "/{articleId}")
     @ResponseStatus(HttpStatus.OK)
-    public EntityModel<Article> updateArticle(@PathVariable("articleId") long articleId,
+    public EntityModel<ArticleDto> updateArticle(@PathVariable("articleId") long articleId,
                                               @RequestBody Article article) {
 
-        Article updatedArticle = articleService.updateArticle(article);
-        EntityModel<Article> orderEntityModel
+        ArticleDto updatedArticle = articleService.updateArticle(article);
+        EntityModel<ArticleDto> orderEntityModel
                 = EntityModel.of(updatedArticle, linkTo(methodOn(ArticleController.class)
                 .article(articleId)).withRel(translator.toLocale("FETCHES_ARTICLE_BY_ID_HATEOAS_LINK_MESSAGE")));
         orderEntityModel.add(linkTo(methodOn(ArticleController.class).articles())
