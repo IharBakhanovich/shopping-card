@@ -1,6 +1,8 @@
 package com.bakhanovich.interviews.shoppingcart.validator.impl;
 
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
+import com.bakhanovich.interviews.shoppingcart.dao.impl.ColumnNames;
+import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
 import com.bakhanovich.interviews.shoppingcart.exception.MethodArgumentNotValidException;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
@@ -99,7 +101,7 @@ public class ArticleValidatorImpl implements ArticleValidator {
             checkFieldIsMoreThanZero(article.getId(), errorMessages,
                     article.getAmount(), "ARTICLE_AMOUNT_SHOULD_BE_MORE_THAN_ZERO");
             checkArticleExistInTheSystem(article, errorMessages);
-            checkArtickleIsOutOfStock(article, errorMessages);
+            checkArticleIsOutOfStock(article, errorMessages);
         }
         if (!errorMessages.isEmpty()) {
             throw new MethodArgumentNotValidException(
@@ -107,7 +109,25 @@ public class ArticleValidatorImpl implements ArticleValidator {
         }
     }
 
-    private void checkArtickleIsOutOfStock(Article article, List<String> errorMessages) {
+    /**
+     * Checks if the article exist in the system.
+     *
+     * @param articleId is the id by which the {@link Article} is to find.
+     * @return {@link Article} with the id {@param articleId} if it exist in the system.
+     * @throws EntityNotFoundException if there is no {@link Article with such an id.}
+     */
+    @Override
+    public Article checkIsArticleExistInTheSystem(long articleId) {
+        List<String> errorMessages = new ArrayList<>();
+        Optional<Article> articleToReturn = articleDao.findById(articleId);
+        if (articleToReturn.isEmpty()) {
+            errorMessages.add(translator.toLocale("ARTICLE_NOT_FOUND_WITH_ARTICLEID") + ": " + articleId);
+            throw new EntityNotFoundException(ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
+        }
+        return articleToReturn.get();
+    }
+
+    private void checkArticleIsOutOfStock(Article article, List<String> errorMessages) {
         Optional<Article> articleInSystem = articleDao.findById(article.getId());
         if (articleInSystem.isPresent()) {
             // check two cases: amount to book should be less than the existing amount in stock

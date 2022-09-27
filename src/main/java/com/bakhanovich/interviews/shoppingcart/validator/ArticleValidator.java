@@ -1,5 +1,6 @@
 package com.bakhanovich.interviews.shoppingcart.validator;
 
+import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 
 import java.util.List;
@@ -22,6 +23,14 @@ public interface ArticleValidator {
      * @param articles is the {@link List<Article>} to validate.
      */
     void validateArticles(List<Article> articles);
+
+    /**
+     * Checks if the article exist in the system.
+     * @param articleId is the id by which the {@link Article} is to find.
+     * @return {@link Article} with the id {@param articleId} if it exist in the system.
+     * @throws EntityNotFoundException if there is no {@link Article with such an id.}
+     */
+    Article checkIsArticleExistInTheSystem(long articleId);
 
 //    /**
 //     * Validates articles stock.

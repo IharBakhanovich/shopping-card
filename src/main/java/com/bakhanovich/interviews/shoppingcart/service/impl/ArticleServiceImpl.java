@@ -53,17 +53,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Article fetchArticleById(long id) {
-        return checkIsArticleExistInTheSystem(id);
-    }
-
-    private Article checkIsArticleExistInTheSystem(long id) {
-        List<String> errorMessages = new ArrayList<>();
-        Optional<Article> articleToReturn = articleDao.findById(id);
-        if (articleToReturn.isEmpty()) {
-            errorMessages.add(translator.toLocale("ARTICLE_NOT_FOUND_WITH_ARTICLEID") + id);
-            throw new EntityNotFoundException(ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
-        }
-        return articleToReturn.get();
+        return articleValidator.checkIsArticleExistInTheSystem(id);
     }
 
     /**

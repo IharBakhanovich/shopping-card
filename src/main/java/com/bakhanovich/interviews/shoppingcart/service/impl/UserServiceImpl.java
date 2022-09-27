@@ -4,19 +4,17 @@ import com.bakhanovich.interviews.shoppingcart.converter.UserToUserDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
 import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
 import com.bakhanovich.interviews.shoppingcart.dto.UserDto;
-import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.service.UserService;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
 import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;
+import com.bakhanovich.interviews.shoppingcart.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The class that implements the {@link UserService} interface.
@@ -33,19 +31,23 @@ public class UserServiceImpl implements UserService {
     private final UserToUserDtoConverter userToUserDtoConverter;
     private final Translator translator;
     private final ArticleValidator articleValidator;
-    ArticleDao articleDao;
+    private final UserValidator userValidator;
+    private final ArticleDao articleDao;
+
 
     @Autowired
     public UserServiceImpl(UserDao userDao,
                            ArticleDao articleDao,
                            UserToUserDtoConverter userToUserDtoConverter,
                            Translator translator,
-                           ArticleValidator articleValidator) {
+                           ArticleValidator articleValidator,
+                           UserValidator userValidator) {
         this.userDao = userDao;
         this.articleDao = articleDao;
         this.userToUserDtoConverter = userToUserDtoConverter;
         this.translator = translator;
         this.articleValidator = articleValidator;
+        this.userValidator = userValidator;
     }
 
     /**
@@ -65,12 +67,12 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDto addArticlesInCart(long userId, List<Article> articles) {
-        User userWhomAddArticles = checkIsUserExistsInTheSystem(userId);
+        User userWhomAddArticles = userValidator.checkIsUserExistsInTheSystem(userId);
         articleValidator.validateArticles(articles);
         List<Article> userArticles = userWhomAddArticles.getArticles();
         for (Article article : articles) {
 
-            Article theSameArticleByUser = findArtickleByUser(userArticles, article.getId());
+            Article theSameArticleByUser = findArticleByUser(userArticles, article.getId());
             Article articleFromTheSystem = articleDao.findById(article.getId()).get();
             article.setPreis(articleFromTheSystem.getPreis());
             if (article.getAmount() < articleFromTheSystem.getMinAmount()) {
@@ -90,30 +92,19 @@ public class UserServiceImpl implements UserService {
         return userToUserDtoConverter.convert(userDao.findById(userId).get());
     }
 
-    private void updateArticleInTheSystem(int initialAmmountToAdd, Article articleFromTheSystem) {
-        int newAmount = articleFromTheSystem.getAmount() - initialAmmountToAdd;
+    private void updateArticleInTheSystem(int initialAmountToAdd, Article articleFromTheSystem) {
+        int newAmount = articleFromTheSystem.getAmount() - initialAmountToAdd;
         articleFromTheSystem.setAmount(newAmount);
         articleDao.update(articleFromTheSystem);
     }
 
-    private Article findArtickleByUser(List<Article> userArticles, long id) {
+    private Article findArticleByUser(List<Article> userArticles, long id) {
         for (Article article : userArticles) {
             if (article.getId() == id) {
                 return article;
             }
         }
         return null;
-    }
-
-
-    private User checkIsUserExistsInTheSystem(long userId) {
-        List<String> errorMessages = new ArrayList<>();
-        Optional<User> userToAddArticles = userDao.findById(userId);
-        if (userToAddArticles.isEmpty()) {
-            errorMessages.add(translator.toLocale("USER_NOT_FOUND_WITH_USERID") + userId);
-            throw new EntityNotFoundException(ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
-        }
-        return userToAddArticles.get();
     }
 
     /**
@@ -123,7 +114,22 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDto fetchUserById(long userId) {
+        userValidator.checkIsUserExistsInTheSystem(userId);
         User user = userDao.findById(userId).get();
         return userToUserDtoConverter.convert(user);
+    }
+
+    /**
+     * Removes {@link Article} with the articleId from the cart of the {@link User} with userId.
+     *
+     * @param userId    is the {@link User}, which {@link Article} with articleId is to remove.
+     * @param articleId is the {@link Article} to be removed.
+     */
+    @Override
+    public void deleteUserArticle(long userId, long articleId) {
+        User user = userValidator.checkIsUserExistsInTheSystem(userId);
+        Article article = articleValidator.checkIsArticleExistInTheSystem(articleId);
+        userValidator.checkIsUserHasSuchAnArticleInCart(user, articleId);
+        userDao.deleteArticleFromUserCart(userId, articleId);
     }
 }

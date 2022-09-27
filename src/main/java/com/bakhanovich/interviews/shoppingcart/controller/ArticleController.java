@@ -64,7 +64,7 @@ public class ArticleController {
     }
 
     /**
-     * The method that realises the 'GET /tags/{tagId}' query.
+     * The method that realises the 'GET /articles/{articleId}' query.
      *
      * @param articleId is the ID of the {@link Article} to find.
      * @return {@link EntityModel<Article>} that contains {@link Article}

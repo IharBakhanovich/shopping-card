@@ -40,7 +40,7 @@ public class UserController {
     }
 
     /**
-     * The method that realises the 'POST /users/{userId{}/articles}' query.
+     * The method that realises the 'POST /users/{userId}/articles}' query.
      *
      * @param articles is the {@link Article} to order.
      * @return the created {@link User}.
@@ -101,6 +101,19 @@ public class UserController {
                 .withRel(translator.toLocale("FETCHES_ALL_USERS_HATEOAS_LINK_MESSAGE")));
         userEntityModel.add(linkTo(methodOn(UserController.class).getUserById(userId)).withSelfRel());
         return userEntityModel;
+    }
+
+    /**
+     * The method that realises the 'DELETE /users/{userId}/articles/{articleId}' query,
+     * i.e. removes article with articleId from the cart of the user with userId.
+     *
+     * @param userId is the ID of the {@link User} which article with {@param articleId} is to delete.
+     * @param articleId is the article, which is to remove.
+     */
+    @DeleteMapping(value = "/{userId}/articles/{articleId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUserArticle(@PathVariable("userId") long userId, @PathVariable("articleId") long articleId) {
+        userService.deleteUserArticle(userId, articleId);
     }
 }
 

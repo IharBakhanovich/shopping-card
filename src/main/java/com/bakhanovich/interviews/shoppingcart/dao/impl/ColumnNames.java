@@ -17,6 +17,8 @@ public class ColumnNames {
     public static final String TABLE_ARTICLE_COLUMN_AMOUNT = "articleAmount";
     public static final String TABLE_ARTICLE_COLUMN_MIN_AMOUNT = "articleMinAmount";
 
+    public static final String ERROR_CODE_ENTITY_NOT_FOUND = "404";
+
     private ColumnNames() {
     }
 }
