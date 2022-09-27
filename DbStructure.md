@@ -6,7 +6,7 @@
 
         user:[{_userId_: integer, role: integer, nickname: String, password: String}]
 
-        article:[{_articleId_: integer, preis: float, amount: integer}]
+        article:[{_articleId_: integer, preis: float, amount: integer, min_amount: integer}]
 
     b. Konvertierung schwacher Entity-Typen
 
@@ -46,9 +46,10 @@ primary key (id)
 
 `CREATE TABLE article
 (
-id     INTEGER NOT NULL AUTO_INCREMENT,
-preis  FLOAT NOT NULL,
-amount INTEGER NOT NULL,
+id         INTEGER NOT NULL AUTO_INCREMENT,
+preis      FLOAT NOT NULL,
+amount     INTEGER NOT NULL,
+min_amount INTEGER NOT NULL,
 primary key (id)
 );`
 

@@ -110,7 +110,10 @@ public class ArticleValidatorImpl implements ArticleValidator {
     private void checkArtickleIsOutOfStock(Article article, List<String> errorMessages) {
         Optional<Article> articleInSystem = articleDao.findById(article.getId());
         if (articleInSystem.isPresent()) {
-            if(article.getAmount() > articleInSystem.get().getAmount()) {
+            // check two cases: amount to book should be less than the existing amount in stock
+            // and the existing amount should be not less than minAmount to book.
+            if (article.getAmount() > articleInSystem.get().getAmount()
+                    || articleInSystem.get().getMinAmount() > articleInSystem.get().getAmount()) {
                 errorMessages.add("articleId " + article.getId() + ": "
                         + translator.toLocale("ARTICLE_IS_OUT_OF_STOCK"));
             }
