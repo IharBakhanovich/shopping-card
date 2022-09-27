@@ -19,18 +19,16 @@ import java.util.Optional;
  */
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
-//    public final static String WRONG_AMOUNT_TO_REDUCE
-//            = "Amout to reduce is more then existing article amount. Please check the amount";
 
     private static final String DELETE_VALUES_IN_UDER_ORDERED_ARTICLE_TABLE_SQL
             = "delete from shopping_card.user_ordered_article where articleId = ?";
     private static final String FIND_ENTITY_BY_ID_SQL
-            = "select article.id as articleId, article.preis as articlePreis, article.amount as articleAmount from article where id = ?";
+            = "select article.id as articleId, article.preis as articlePreis, article.amount as articleAmount, article.min_amount as articleMinAmount from article where id = ?";
     private static final String FIND_ALL_ENTITIES_SQL
-            = "select article.id as articleId, article.preis as articlePreis, article.amount as articleAmount from article";
-    private static final String UPDATE_ENTITY_SQL = "update article set preis = ?, amount = ? where id = ?";
+            = "select article.id as articleId, article.preis as articlePreis, article.amount as articleAmount, article.min_amount as articleMinAmount from article";
+    private static final String UPDATE_ENTITY_SQL = "update article set preis = ?, amount = ?, min_amount = ? where id = ?";
     private static final String DELETE_ENTITY_BY_ID_SQL = "delete from article where id = ?";
-    private static final String INSERT_ENTITY_SQL = "insert into article (preis, amount) values (?, ?)";
+    private static final String INSERT_ENTITY_SQL = "insert into article (preis, amount, min_amount) values (?, ?, ?)";
 
     private EntityManager entityManager;
     private JdbcTemplate jdbcTemplate;
@@ -59,7 +57,8 @@ public class ArticleDaoImpl implements ArticleDao {
 //        entityManager.persist(entity);
         jdbcTemplate.update(INSERT_ENTITY_SQL,
                 entity.getPreis(),
-                entity.getAmount());
+                entity.getAmount(),
+                entity.getMinAmount());
     }
 
     /**
@@ -103,6 +102,7 @@ public class ArticleDaoImpl implements ArticleDao {
         jdbcTemplate.update(UPDATE_ENTITY_SQL,
                 entity.getPreis(),
                 entity.getAmount(),
+                entity.getMinAmount(),
                 entity.getId());
     }
 

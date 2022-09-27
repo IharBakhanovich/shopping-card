@@ -8,9 +8,10 @@ CREATE TABLE app_user
 );
 CREATE TABLE article
 (
-    id     INTEGER NOT NULL AUTO_INCREMENT,
-    preis  FLOAT NOT NULL,
-    amount INTEGER NOT NULL,
+    id         INTEGER NOT NULL AUTO_INCREMENT,
+    preis      FLOAT   NOT NULL,
+    amount     INTEGER NOT NULL,
+    min_amount INTEGER NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE TABLE user_ordered_article

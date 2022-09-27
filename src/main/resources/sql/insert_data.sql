@@ -1,8 +1,8 @@
-INSERT INTO article (preis, amount) VALUES (10.99, 7);
-INSERT INTO article (preis, amount) VALUES (11.99, 5);
-INSERT INTO article (preis, amount) VALUES (12.99, 10);
-INSERT INTO article (preis, amount) VALUES (14.99, 15);
-INSERT INTO article (preis, amount) VALUES (15.99, 3);
+INSERT INTO article (preis, amount, min_amount) VALUES (10.99, 7, 4);
+INSERT INTO article (preis, amount, min_amount) VALUES (11.99, 5, 2);
+INSERT INTO article (preis, amount, min_amount) VALUES (12.99, 10, 2);
+INSERT INTO article (preis, amount, min_amount) VALUES (14.99, 15, 3);
+INSERT INTO article (preis, amount, min_amount) VALUES (15.99, 3, 2);
 INSERT INTO app_user (nickName, role, password) VALUES ('user1', 1, '***');
 INSERT INTO app_user (nickName, role, password) VALUES ('user2', 2, '***');
 INSERT INTO app_user (nickName, role, password) VALUES ('user3', 2, '***');

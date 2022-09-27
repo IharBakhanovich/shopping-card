@@ -15,6 +15,7 @@ public class ColumnNames {
     public static final String TABLE_ARTICLE_COLUMN_ID = "articleId";
     public static final String TABLE_ARTICLE_COLUMN_PREIS = "articlePreis";
     public static final String TABLE_ARTICLE_COLUMN_AMOUNT = "articleAmount";
+    public static final String TABLE_ARTICLE_COLUMN_MIN_AMOUNT = "articleMinAmount";
 
     private ColumnNames() {
     }

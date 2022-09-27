@@ -4,9 +4,9 @@
 
     a. Konvertierung starker Entity-Typen
 
-        user:[{_userId_: integer, Role: String, Nickname: String, Password: String}]
+        user:[{_userId_: integer, role: integer, nickname: String, password: String}]
 
-        article:[{_articleId_: integer, Preis: float, Amount: integer}]
+        article:[{_articleId_: integer, preis: float, amount: integer}]
 
     b. Konvertierung schwacher Entity-Typen
 

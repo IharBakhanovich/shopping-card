@@ -28,7 +28,8 @@ public class ArticleRowMapper implements RowMapper<Article> {
         return new Article(
                 resultSet.getLong(ColumnNames.TABLE_ARTICLE_COLUMN_ID),
                 resultSet.getBigDecimal(ColumnNames.TABLE_ARTICLE_COLUMN_PREIS),
-                resultSet.getInt(ColumnNames.TABLE_ARTICLE_COLUMN_AMOUNT)
+                resultSet.getInt(ColumnNames.TABLE_ARTICLE_COLUMN_AMOUNT),
+                resultSet.getInt(ColumnNames.TABLE_ARTICLE_COLUMN_MIN_AMOUNT)
         );
     }
 }

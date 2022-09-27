@@ -1,13 +1,19 @@
 package com.bakhanovich.interviews.shoppingcart.service.impl;
 
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
+import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
+import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.service.ArticleService;
+import com.bakhanovich.interviews.shoppingcart.translator.Translator;
+import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The class that implements the {@link ArticleService} interface.
@@ -17,12 +23,19 @@ import java.util.List;
 @Service
 @Transactional
 public class ArticleServiceImpl implements ArticleService {
+    public static final String ERROR_CODE_ENTITY_NOT_FOUND = "404";
 
     private final ArticleDao articleDao;
+    private final ArticleValidator articleValidator;
+    private final Translator translator;
 
     @Autowired
-    public ArticleServiceImpl(ArticleDao articleDao) {
+    public ArticleServiceImpl(ArticleDao articleDao,
+                              ArticleValidator articleValidator,
+                              Translator translator) {
         this.articleDao = articleDao;
+        this.articleValidator = articleValidator;
+        this.translator = translator;
     }
 
     /**
@@ -40,8 +53,17 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Article fetchArticleById(long id) {
-        //todo validation
-        return articleDao.findById(id).get();
+        return checkIsArticleExistInTheSystem(id);
+    }
+
+    private Article checkIsArticleExistInTheSystem(long id) {
+        List<String> errorMessages = new ArrayList<>();
+        Optional<Article> articleToReturn = articleDao.findById(id);
+        if (articleToReturn.isEmpty()) {
+            errorMessages.add(translator.toLocale("ARTICLE_NOT_FOUND_WITH_ARTICLEID") + id);
+            throw new EntityNotFoundException(ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
+        }
+        return articleToReturn.get();
     }
 
     /**
@@ -51,7 +73,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Article updateArticle(Article article) {
-        //todo validation
+        articleValidator.validateArticle(article);
         articleDao.update(article);
         return articleDao.findById(article.getId()).get();
     }

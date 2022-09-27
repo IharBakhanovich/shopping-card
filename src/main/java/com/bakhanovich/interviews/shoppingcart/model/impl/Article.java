@@ -31,4 +31,6 @@ public class Article implements DatabaseEntity, Serializable {
     private BigDecimal preis;
     @Column(name = "amount", nullable = false)
     private int amount;
+    @Column(name = "min_amount", nullable = false)
+    private int minAmount;
 }

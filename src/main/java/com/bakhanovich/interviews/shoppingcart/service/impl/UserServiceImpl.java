@@ -30,10 +30,10 @@ public class UserServiceImpl implements UserService {
     public static final String ERROR_CODE_ENTITY_NOT_FOUND = "404";
 
     private final UserDao userDao;
-    ArticleDao articleDao;
     private final UserToUserDtoConverter userToUserDtoConverter;
     private final Translator translator;
     private final ArticleValidator articleValidator;
+    ArticleDao articleDao;
 
     @Autowired
     public UserServiceImpl(UserDao userDao,
@@ -67,11 +67,16 @@ public class UserServiceImpl implements UserService {
     public UserDto addArticlesInCart(long userId, List<Article> articles) {
         User userWhomAddArticles = checkIsUserExistsInTheSystem(userId);
         articleValidator.validateArticles(articles);
-        List <Article> userArticles = userWhomAddArticles.getArticles();
+        List<Article> userArticles = userWhomAddArticles.getArticles();
         for (Article article : articles) {
+
             Article theSameArticleByUser = findArtickleByUser(userArticles, article.getId());
             Article articleFromTheSystem = articleDao.findById(article.getId()).get();
             article.setPreis(articleFromTheSystem.getPreis());
+            if (article.getAmount() < articleFromTheSystem.getMinAmount()) {
+                article.setAmount(articleFromTheSystem.getMinAmount());
+            }
+            int initialArticleAmountToAdd = article.getAmount();
             if (theSameArticleByUser != null) {
                 int articleAmountToAdd = theSameArticleByUser.getAmount() + article.getAmount();
                 article.setAmount(articleAmountToAdd);
@@ -79,21 +84,21 @@ public class UserServiceImpl implements UserService {
             } else {
                 userDao.addArticleToUserCart(userId, article);
             }
-            updateArticleInTheSystem(article, articleFromTheSystem);
+            updateArticleInTheSystem(initialArticleAmountToAdd, articleFromTheSystem);
         }
 
         return userToUserDtoConverter.convert(userDao.findById(userId).get());
     }
 
-    private void updateArticleInTheSystem(Article article, Article articleFromTheSystem) {
-        int newAmount = articleFromTheSystem.getAmount()- article.getAmount();
+    private void updateArticleInTheSystem(int initialAmmountToAdd, Article articleFromTheSystem) {
+        int newAmount = articleFromTheSystem.getAmount() - initialAmmountToAdd;
         articleFromTheSystem.setAmount(newAmount);
         articleDao.update(articleFromTheSystem);
     }
 
     private Article findArtickleByUser(List<Article> userArticles, long id) {
         for (Article article : userArticles) {
-            if(article.getId() == id) {
+            if (article.getId() == id) {
                 return article;
             }
         }
@@ -104,7 +109,7 @@ public class UserServiceImpl implements UserService {
     private User checkIsUserExistsInTheSystem(long userId) {
         List<String> errorMessages = new ArrayList<>();
         Optional<User> userToAddArticles = userDao.findById(userId);
-        if(userToAddArticles.isEmpty()) {
+        if (userToAddArticles.isEmpty()) {
             errorMessages.add(translator.toLocale("USER_NOT_FOUND_WITH_USERID") + userId);
             throw new EntityNotFoundException(ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
         }

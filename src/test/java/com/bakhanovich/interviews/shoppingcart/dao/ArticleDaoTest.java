@@ -69,7 +69,7 @@ public class ArticleDaoTest {
 
     @Test
     public void testSave() {
-        Article article = new Article(6L, BigDecimal.valueOf(1.22f), 100);
+        Article article = new Article(6L, BigDecimal.valueOf(1.22f), 100, 2);
         articleDao.save(article);
         Article addedArticle = articleDao.findById(6).get();
         Assertions.assertEquals(article.getAmount(), addedArticle.getAmount());

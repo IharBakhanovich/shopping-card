@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_ALL_ENTITIES_SQL
             = "select u.id as userId, u.nickName as userNickname," +
             " u.role as userRole, u.password as userPassword," +
-            " a.id as articleId, a.preis as articlePreis, uoa.amount as articleAmount" +
+            " a.id as articleId, a.preis as articlePreis, uoa.amount as articleAmount, a.min_amount as articleMinAmount" +
             " from app_user as u LEFT OUTER JOIN" +
             " (user_ordered_article as uoa LEFT OUTER JOIN article as a ON a.id = uoa.articleId)" +
             " ON u.id = uoa.userId";
@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_ENTITY_BY_ID_SQL
             = "select u.id as userId, u.nickName as userNickname," +
             " u.role as userRole, u.password as userPassword," +
-            " a.id as articleId, a.preis as articlePreis, uoa.amount as articleAmount" +
+            " a.id as articleId, a.preis as articlePreis, uoa.amount as articleAmount, a.min_amount as articleMinAmount" +
             " from app_user as u LEFT OUTER JOIN" +
             " (user_ordered_article as uoa LEFT OUTER JOIN article as a ON a.id = uoa.articleId)" +
             " ON u.id = uoa.userId where u.id = ?";
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_ENTITY_BY_NAME_SQL
             = "select u.id as userId, u.nickName as userNickname," +
             " u.role as userRole, u.password as userPassword," +
-            " a.id as articleId, a.preis as articlePreis, uoa.amount as articleAmount" +
+            " a.id as articleId, a.preis as articlePreis, uoa.amount as articleAmount, a.min_amount as articleMinAmount" +
             " from app_user as u LEFT OUTER JOIN" +
             " (user_ordered_article as uoa LEFT OUTER JOIN article as a ON a.id = uoa.articleId)" +
             " ON u.id = uoa.userId where u.nickName = ?";
