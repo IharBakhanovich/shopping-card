@@ -115,5 +115,17 @@ public class UserController {
     public void deleteUserArticle(@PathVariable("userId") long userId, @PathVariable("articleId") long articleId) {
         userService.deleteUserArticle(userId, articleId);
     }
+
+    /**
+     * The method that realises the 'DELETE /users/{userId}/articles' query,
+     * i.e. removes all articles from the cart of the user with userId.
+     *
+     * @param userId is the ID of the {@link User} which article with {@param articleId} is to delete.
+     */
+    @DeleteMapping(value = "/{userId}/articles")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUserArticle(@PathVariable("userId") long userId) {
+        userService.deleteAllUserArticles(userId);
+    }
 }
 

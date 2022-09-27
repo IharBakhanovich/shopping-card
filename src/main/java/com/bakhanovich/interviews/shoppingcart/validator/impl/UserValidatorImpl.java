@@ -4,8 +4,8 @@ import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
 import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
 import com.bakhanovich.interviews.shoppingcart.dao.impl.ColumnNames;
 import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
-import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
+import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
 import com.bakhanovich.interviews.shoppingcart.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +50,17 @@ public class UserValidatorImpl implements UserValidator {
      *
      * @param user      is the {@link User} to check.
      * @param articleId is the {@link Article} id to check.
+     * @return {@link Article} with {@param articleId}, which contains user's cart.
      */
     @Override
-    public void checkIsUserHasSuchAnArticleInCart(User user, long articleId) {
+    public Article checkIsUserHasSuchAnArticleInCart(User user, long articleId) {
         List<String> errorMessages = new ArrayList<>();
         boolean hasSuchAnArticle = false;
+        Article userArticle = null;
         for (Article article: user.getArticles()) {
             if (article.getId() == articleId) {
                 hasSuchAnArticle = true;
+                userArticle = article;
                 break;
             }
         }
@@ -66,6 +69,7 @@ public class UserValidatorImpl implements UserValidator {
                     + " user id: " + user.getId() + " article id: " + articleId);
             throw new EntityNotFoundException(ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
         }
+        return userArticle;
     }
 
     /**

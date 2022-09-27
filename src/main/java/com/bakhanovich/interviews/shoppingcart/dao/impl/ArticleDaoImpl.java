@@ -30,9 +30,9 @@ public class ArticleDaoImpl implements ArticleDao {
     private static final String DELETE_ENTITY_BY_ID_SQL = "delete from article where id = ?";
     private static final String INSERT_ENTITY_SQL = "insert into article (preis, amount, min_amount) values (?, ?, ?)";
 
-    private EntityManager entityManager;
-    private JdbcTemplate jdbcTemplate;
-    private RowMapper<Article> articleRowMapper;
+    private final EntityManager entityManager;
+    private final JdbcTemplate jdbcTemplate;
+    private final RowMapper<Article> articleRowMapper;
 
     /**
      * constructs the ArticleDao Bean implementation

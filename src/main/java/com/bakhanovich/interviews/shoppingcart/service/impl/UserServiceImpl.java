@@ -129,7 +129,31 @@ public class UserServiceImpl implements UserService {
     public void deleteUserArticle(long userId, long articleId) {
         User user = userValidator.checkIsUserExistsInTheSystem(userId);
         Article article = articleValidator.checkIsArticleExistInTheSystem(articleId);
-        userValidator.checkIsUserHasSuchAnArticleInCart(user, articleId);
+        Article userArticle = userValidator.checkIsUserHasSuchAnArticleInCart(user, articleId);
+
         userDao.deleteArticleFromUserCart(userId, articleId);
+        returnArticleToStock(userArticle);
+    }
+
+    /**
+     * Removes all {@link Article}s from the cart of the {@link User} with userId.
+     *
+     * @param userId is the {@link User}, which {@link Article}s are to remove.
+     */
+    @Override
+    public void deleteAllUserArticles(long userId) {
+        User user = userValidator.checkIsUserExistsInTheSystem(userId);
+        for (Article article : user.getArticles()) {
+            userDao.deleteArticleFromUserCart(userId, article.getId());
+            returnArticleToStock(article);
+        }
+    }
+
+    private void returnArticleToStock(Article article) {
+        Article articleInSystem = articleDao.findById(article.getId()).get();
+//        Article articleToUpdate = new Article(articleInSystem.getId(), articleInSystem.getPreis(),
+//                articleInSystem.getAmount() + article.getAmount(), articleInSystem.getMinAmount());
+        articleInSystem.setAmount(articleInSystem.getAmount() + article.getAmount());
+        articleDao.update(articleInSystem);
     }
 }
