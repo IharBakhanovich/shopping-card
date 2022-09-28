@@ -4,6 +4,7 @@ import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.service.ArticleService;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
+import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -26,6 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ArticleController {
     private final ArticleService articleService;
     private final Translator translator;
+    private final ArticleValidator articleValidator;
 
     /**
      * Constructs the {@link ArticleController}.
@@ -33,9 +35,12 @@ public class ArticleController {
      * @param articleService is the service to inject.
      */
     @Autowired
-    public ArticleController(ArticleService articleService, Translator translator) {
+    public ArticleController(ArticleService articleService,
+                             Translator translator,
+                             ArticleValidator articleValidator) {
         this.articleService = articleService;
         this.translator = translator;
+        this.articleValidator = articleValidator;
     }
 
     /**
@@ -90,6 +95,8 @@ public class ArticleController {
     public EntityModel<ArticleDto> updateArticle(@PathVariable("articleId") long articleId,
                                                  @RequestBody Article article) {
 
+        Article articleToUpdate = articleValidator.checkIsArticleExistInTheSystem(articleId);
+        article.setId(articleToUpdate.getId());
         ArticleDto updatedArticle = articleService.updateArticle(article);
         EntityModel<ArticleDto> orderEntityModel
                 = EntityModel.of(updatedArticle, linkTo(methodOn(ArticleController.class)

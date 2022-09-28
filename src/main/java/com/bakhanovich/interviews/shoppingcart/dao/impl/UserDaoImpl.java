@@ -59,7 +59,6 @@ public class UserDaoImpl implements UserDao {
             = "insert into app_user (nickName, role, password) values (?, ?, ?)";
     private static final String DELETE_ENTITY_BY_ID_SQL = "delete from app_user where id = ?";
 
-    //    private EntityManager entityManager;
     private final JdbcTemplate jdbcTemplate;
     private final UserExtractor userExtractor;
 

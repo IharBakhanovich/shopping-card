@@ -22,10 +22,10 @@ public interface UserService {
      * Adds article to {@link User} and returns user with all his articles.
      *
      * @param userId   is the id of the {@link User} to whom an {@link List<Article>} should be added.
-     * @param articles is all the articles, that should be added to user
+     * @param articlesToAdd is all the articles, that should be added to user
      * @return {@link UserDto}, i.e. a {@link User} with all his articles and with the total costs of all his articles.
      */
-    UserDto addArticlesInCart(long userId, List<Article> articles);
+    UserDto addArticlesInCart(long userId, List<Article> articlesToAdd);
 
     /**
      * Returns a {@link User} by its id.

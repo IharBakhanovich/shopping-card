@@ -56,16 +56,25 @@ public class UserServiceImpl implements UserService {
      * Adds article to {@link User} and returns user with all his articles.
      *
      * @param userId   is the id of the {@link User} to whom an {@link List<Article>} should be added.
-     * @param articles is all the articles, that should be added to user
+     * @param articlesToAdd is all the articles, that should be added to user
      * @return {@link UserDto}, i.e. a {@link User} with all his articles and with the total costs of all his articles.
      */
     @Override
-    public UserDto addArticlesInCart(long userId, List<Article> articles) {
-        User userWhomAddArticles = userValidator.checkIsUserExistsInTheSystem(userId);
-        articleValidator.validateArticles(articles);
-        List<Article> userArticles = userWhomAddArticles.getArticles();
+    public UserDto addArticlesInCart(long userId, List<Article> articlesToAdd) {
+        List<Article> userArticles = checkUserAndArticlesAndGetUserArticles(userId, articlesToAdd);
+        addArticlesToUser(userId, articlesToAdd, userArticles);
+        return userToUserDtoConverter.convert(userDao.findById(userId).get());
+    }
 
-        for (Article article : articles) {
+    private List<Article> checkUserAndArticlesAndGetUserArticles(long userId, List<Article> articlesToAdd) {
+        User userWhomAddArticles = userValidator.checkIsUserExistsInTheSystem(userId);
+        articleValidator.validateArticles(articlesToAdd);
+        List<Article> userArticles = userWhomAddArticles.getArticles();
+        return userArticles;
+    }
+
+    private void addArticlesToUser(long userId, List<Article> articlesToAdd, List<Article> userArticles) {
+        for (Article article : articlesToAdd) {
             Article theSameArticleByUser = findArticleByUser(userArticles, article.getId());
             Article articleFromTheSystem = articleDao.findById(article.getId()).get();
             article.setPreis(articleFromTheSystem.getPreis());
@@ -74,16 +83,18 @@ public class UserServiceImpl implements UserService {
             }
             int initialArticleAmountToAdd = article.getAmount();
             if (theSameArticleByUser != null) {
-                int articleAmountToAdd = theSameArticleByUser.getAmount() + article.getAmount();
-                article.setAmount(articleAmountToAdd);
-                userDao.updateArticleBookedByUser(userId, article);
+                updateExistingUserArticle(userId, article, theSameArticleByUser);
             } else {
                 userDao.addArticleToUserCart(userId, article);
             }
             updateArticleInTheSystem(initialArticleAmountToAdd, articleFromTheSystem);
         }
+    }
 
-        return userToUserDtoConverter.convert(userDao.findById(userId).get());
+    private void updateExistingUserArticle(long userId, Article article, Article theSameArticleByUser) {
+        int articleAmountToAdd = theSameArticleByUser.getAmount() + article.getAmount();
+        article.setAmount(articleAmountToAdd);
+        userDao.updateArticleBookedByUser(userId, article);
     }
 
     private void updateArticleInTheSystem(int initialAmountToAdd, Article articleFromTheSystem) {

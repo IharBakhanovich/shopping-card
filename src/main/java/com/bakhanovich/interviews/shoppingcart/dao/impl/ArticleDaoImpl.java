@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +19,6 @@ import java.util.Optional;
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
 
-//    private static final String DELETE_VALUES_IN_UDER_ORDERED_ARTICLE_TABLE_SQL
-//            = "delete from shopping_card.user_ordered_article where articleId = ?";
     private static final String FIND_ENTITY_BY_ID_SQL
             = "select article.id as articleId, article.preis as articlePreis, article.amount as articleAmount, article.min_amount as articleMinAmount from article where id = ?";
     private static final String FIND_ALL_ENTITIES_SQL
@@ -30,7 +27,6 @@ public class ArticleDaoImpl implements ArticleDao {
     private static final String DELETE_ENTITY_BY_ID_SQL = "delete from article where id = ?";
     private static final String INSERT_ENTITY_SQL = "insert into article (preis, amount, min_amount) values (?, ?, ?)";
 
-//    private final EntityManager entityManager;
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Article> articleRowMapper;
 
@@ -49,7 +45,6 @@ public class ArticleDaoImpl implements ArticleDao {
      */
     @Override
     public void save(Article entity) throws DuplicateException {
-//        entityManager.persist(entity);
         jdbcTemplate.update(INSERT_ENTITY_SQL,
                 entity.getPreis(),
                 entity.getAmount(),
@@ -63,8 +58,6 @@ public class ArticleDaoImpl implements ArticleDao {
      */
     @Override
     public List<Article> findAll() {
-//        return entityManager.createQuery("select a from article a order by a.id", Article.class)
-//                .getResultList();
         return jdbcTemplate.query(FIND_ALL_ENTITIES_SQL, articleRowMapper);
     }
 
@@ -103,20 +96,4 @@ public class ArticleDaoImpl implements ArticleDao {
     public void delete(long id) {
         jdbcTemplate.update(DELETE_ENTITY_BY_ID_SQL, id);
     }
-
-//    /**
-//     * Removes records from 'user_order_article' table by articleId.
-//     *
-//     * @param articleId is the id to remove by.
-//     */
-//    @Override
-//    public void deleteFromUserOrderedArticleByArticleId(long articleId) {
-//        List resultList = entityManager.createNativeQuery(
-//                        "select userId as uId, articleId as aId, amount as amount from shopping_card.user_ordered_article where articleId = ?")
-//                .setParameter(1, articleId).getResultList();
-//        if (!resultList.isEmpty()) {
-//            entityManager.createNativeQuery(DELETE_VALUES_IN_UDER_ORDERED_ARTICLE_TABLE_SQL)
-//                    .setParameter(1, articleId).executeUpdate();
-//        }
-//    }
 }
