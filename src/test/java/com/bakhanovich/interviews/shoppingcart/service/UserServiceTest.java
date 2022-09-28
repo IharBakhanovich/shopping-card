@@ -4,12 +4,9 @@ import com.bakhanovich.interviews.shoppingcart.converter.ArticleToArticleDtoConv
 import com.bakhanovich.interviews.shoppingcart.converter.UserToUserDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
 import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
-import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
 import com.bakhanovich.interviews.shoppingcart.dto.UserDto;
-import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Role;
 import com.bakhanovich.interviews.shoppingcart.model.impl.User;
-import com.bakhanovich.interviews.shoppingcart.service.impl.ArticleServiceImpl;
 import com.bakhanovich.interviews.shoppingcart.service.impl.UserServiceImpl;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
 import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;

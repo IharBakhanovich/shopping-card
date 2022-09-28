@@ -46,8 +46,10 @@ public class ArticleValidatorImpl implements ArticleValidator {
 
         checkEmptyFields(article, errorMessages);
 
-        checkFieldIsMoreThanZero(article.getId(), errorMessages,
-                article.getPreis().floatValue(), "ARTICLE_PRICE_SHOULD_BE_MORE_THAN_ZERO");
+        if (article.getPreis() != null) {
+            checkFieldIsMoreThanZero(article.getId(), errorMessages,
+                    article.getPreis().floatValue(), "ARTICLE_PRICE_SHOULD_BE_MORE_THAN_ZERO");
+        }
 
         checkFieldIsMoreThanZero(article.getId(), errorMessages,
                 article.getAmount(), "ARTICLE_AMOUNT_SHOULD_BE_MORE_THAN_ZERO");
@@ -94,7 +96,6 @@ public class ArticleValidatorImpl implements ArticleValidator {
     @Override
     public void validateArticles(List<Article> articles) {
         List<String> errorMessages = new ArrayList<>();
-        //todo: if articles is null?
         for (Article article : articles) {
             checkIdFieldIsMoreThanZero(article, errorMessages);
             checkAmountFieldIsNotEmpty(article, errorMessages);
@@ -148,7 +149,7 @@ public class ArticleValidatorImpl implements ArticleValidator {
     }
 
     private void checkIdFieldIsMoreThanZero(Article article, List<String> errorMessages) {
-        if (article.getId() < 0) {
+        if (article.getId() < 0 || article.getId() == 0) {
             errorMessages.add("articleId " + article.getId() + ": "
                     + translator.toLocale("THE_AMOUNT_FIELD_SHOULD_NOT_BE_EMPTY"));
         }
