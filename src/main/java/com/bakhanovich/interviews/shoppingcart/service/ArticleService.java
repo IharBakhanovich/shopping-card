@@ -4,7 +4,6 @@ import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * The interface that defines the {@link ArticleService} api of the application.

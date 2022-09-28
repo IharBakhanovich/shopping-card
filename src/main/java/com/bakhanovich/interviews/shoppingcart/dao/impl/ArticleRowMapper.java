@@ -19,7 +19,7 @@ public class ArticleRowMapper implements RowMapper<Article> {
      * Maps the row from {@link ResultSet} to the {@link Article}.
      *
      * @param resultSet is the {@link ResultSet} to map from.
-     * @param rowNum         is the row to map.
+     * @param rowNum    is the row to map.
      * @return {@link Article}.
      * @throws SQLException if something went wrong.
      */

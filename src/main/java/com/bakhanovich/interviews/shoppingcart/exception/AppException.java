@@ -3,9 +3,9 @@ package com.bakhanovich.interviews.shoppingcart.exception;
 /**
  * The Main class of the application {@link RuntimeException}.
  *
- * @author Ihar Bakhanovich
+ * @author Ihar Bakhanovich.
  */
-public class AppException extends RuntimeException{
+public class AppException extends RuntimeException {
     String errorCode;
     Object errorMessage;
 

@@ -68,8 +68,8 @@ public class UserDaoTest {
 
     @Test
     public void testSave() {
-        User article = new User(6L, "User6", "***", Role.ROLE_USER, null);
-        userDao.save(article);
+        User user = new User(6L, "User6", "***", Role.ROLE_USER, null);
+        userDao.save(user);
         User addedUser = userDao.findById(6).get();
         Assertions.assertEquals(addedUser.getNickName(), addedUser.getNickName());
     }

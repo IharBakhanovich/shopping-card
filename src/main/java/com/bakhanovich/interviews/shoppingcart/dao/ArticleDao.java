@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * The interface, that implements DAO for the {@link Article} entity.
  *
- * @author Ihar Bakhanovich
+ * @author Ihar Bakhanovich.
  */
 public interface ArticleDao extends Dao<Article> {
 
@@ -21,16 +21,6 @@ public interface ArticleDao extends Dao<Article> {
      */
     @Override
     void save(Article entity) throws DuplicateException;
-
-//    /**
-//     * Finds all {@link Article} entity in the database.
-//     *
-//     * @param pageNumber              is the number of the page.
-//     * @param amountEntitiesOnThePage is the value of the records,
-//     *                                which should be fetched from the database and showed on the page.
-//     * @return List of the {@link Article} objects.
-//     */
-//    List<Article> findAllPagination(int pageNumber, int amountEntitiesOnThePage);
 
     /**
      * Finds all {@link Article} entity in the database.
@@ -66,18 +56,10 @@ public interface ArticleDao extends Dao<Article> {
     void delete(long id);
 
 //    /**
-//     * Finds {@link Optional<Article>} in the database by the article name.
+//     * Removes records from 'user_order_article' table by articleId.
 //     *
-//     * @param name is the {@link String} to find.
-//     * @return {@link Optional<Article>}.
+//     * @param articleId is the id to remove by.
 //     */
-//    Optional<Article> findByName(String name);
-
-    /**
-     * Removes records from 'user_order_article' table by articleId.
-     *
-     * @param articleId is the id to remove by.
-     */
-    void deleteFromUserOrderedArticleByArticleId(long articleId);
+//    void deleteFromUserOrderedArticleByArticleId(long articleId);
 
 }

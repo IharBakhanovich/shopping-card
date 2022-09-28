@@ -78,11 +78,6 @@ public class UserController {
                                 .withRel(translator.toLocale("ADDS_ARTICLES_IN_CART_HATEOAS_LINK_MESSAGE"))))
                 .collect(Collectors.toList());
         CollectionModel<EntityModel<UserDto>> collectionModel = CollectionModel.of(modelFromArticles);
-//        collectionModel.add(linkTo(methodOn(CertificateTagController.class).tags(paramsNext)).
-//                        withRel(translator.toLocale("FETCHES_NEXT_PAGE_TAG_HATEOAS_LINK_MESSAGE")),
-//                linkTo(methodOn(CertificateTagController.class).tags(paramsPrev)).
-//                        withRel(translator.toLocale("FETCHES_PREVIOUS_PAGE_TAG_HATEOAS_LINK_MESSAGE")),
-//                linkTo(methodOn(CertificateTagController.class).tags(parameters)).withSelfRel());
         return collectionModel;
     }
 
@@ -107,7 +102,7 @@ public class UserController {
      * The method that realises the 'DELETE /users/{userId}/articles/{articleId}' query,
      * i.e. removes article with articleId from the cart of the user with userId.
      *
-     * @param userId is the ID of the {@link User} which article with {@param articleId} is to delete.
+     * @param userId    is the ID of the {@link User} which article with {@param articleId} is to delete.
      * @param articleId is the article, which is to remove.
      */
     @DeleteMapping(value = "/{userId}/articles/{articleId}")

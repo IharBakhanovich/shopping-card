@@ -55,11 +55,6 @@ public class ArticleController {
                                 .withRel(translator.toLocale("UPDATES_ARTICLE_HATEOAS_LINK_MESSAGE"))))
                 .collect(Collectors.toList());
         CollectionModel<EntityModel<ArticleDto>> collectionModel = CollectionModel.of(modelFromArticles);
-//        collectionModel.add(linkTo(methodOn(CertificateTagController.class).tags(paramsNext)).
-//                        withRel(translator.toLocale("FETCHES_NEXT_PAGE_TAG_HATEOAS_LINK_MESSAGE")),
-//                linkTo(methodOn(CertificateTagController.class).tags(paramsPrev)).
-//                        withRel(translator.toLocale("FETCHES_PREVIOUS_PAGE_TAG_HATEOAS_LINK_MESSAGE")),
-//                linkTo(methodOn(CertificateTagController.class).tags(parameters)).withSelfRel());
         return collectionModel;
     }
 
@@ -77,8 +72,6 @@ public class ArticleController {
         EntityModel<ArticleDto> orderEntityModel
                 = EntityModel.of(articleDto, linkTo(methodOn(ArticleController.class).articles())
                 .withRel(translator.toLocale("FETCHES_ALL_ARTICLES_HATEOAS_LINK_MESSAGE")));
-//        orderEntityModel.add(linkTo(methodOn(ArticleController.class).articles())
-//                .withRel(translator.toLocale("FETCHES_ALL_ARTICLES_HATEOAS_LINK_MESSAGE")));
         orderEntityModel.add(linkTo(methodOn(ArticleController.class).updateArticle(articleDto.getArticleId(), new Article()))
                 .withRel(translator.toLocale("UPDATES_ARTICLE_HATEOAS_LINK_MESSAGE")));
         return orderEntityModel.add(linkTo(methodOn(ArticleController.class).article(articleDto.getArticleId())).withSelfRel());
@@ -95,7 +88,7 @@ public class ArticleController {
     @PutMapping(value = "/{articleId}")
     @ResponseStatus(HttpStatus.OK)
     public EntityModel<ArticleDto> updateArticle(@PathVariable("articleId") long articleId,
-                                              @RequestBody Article article) {
+                                                 @RequestBody Article article) {
 
         ArticleDto updatedArticle = articleService.updateArticle(article);
         EntityModel<ArticleDto> orderEntityModel

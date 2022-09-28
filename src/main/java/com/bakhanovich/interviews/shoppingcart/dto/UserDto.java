@@ -1,6 +1,5 @@
 package com.bakhanovich.interviews.shoppingcart.dto;
 
-import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Role;
 import lombok.AllArgsConstructor;

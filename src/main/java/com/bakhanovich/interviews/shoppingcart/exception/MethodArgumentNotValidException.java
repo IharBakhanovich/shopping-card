@@ -3,7 +3,7 @@ package com.bakhanovich.interviews.shoppingcart.exception;
 /**
  * Exception: Thrown if a method-argument is not valid.
  *
- * @author Ihar Bakhanovich
+ * @author Ihar Bakhanovich.
  */
 public class MethodArgumentNotValidException extends AppException{
     /**

@@ -2,7 +2,6 @@ package com.bakhanovich.interviews.shoppingcart.converter.impl;
 
 import com.bakhanovich.interviews.shoppingcart.converter.ArticleToArticleDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.converter.UserToUserDtoConverter;
-import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
 import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
 import com.bakhanovich.interviews.shoppingcart.dto.UserDto;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * The implementation of the {@link UserToUserDtoConverter} interface.
  *
- * @author Ihar Bakhanovich
+ * @author Ihar Bakhanovich.
  */
 @Component
 public class UserToUserDtoConverterImpl implements UserToUserDtoConverter {

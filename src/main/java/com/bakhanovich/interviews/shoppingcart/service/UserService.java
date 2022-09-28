@@ -37,7 +37,7 @@ public interface UserService {
     /**
      * Removes {@link Article} with the articleId from the cart of the {@link User} with userId.
      *
-     * @param userId is the {@link User}, which {@link Article} with articleId is to remove.
+     * @param userId    is the {@link User}, which {@link Article} with articleId is to remove.
      * @param articleId is the {@link Article} to be removed.
      */
     void deleteUserArticle(long userId, long articleId);

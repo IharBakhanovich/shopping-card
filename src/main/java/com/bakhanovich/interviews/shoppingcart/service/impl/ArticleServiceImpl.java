@@ -3,9 +3,7 @@ package com.bakhanovich.interviews.shoppingcart.service.impl;
 import com.bakhanovich.interviews.shoppingcart.converter.ArticleToArticleDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
 import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
-import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
-import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.service.ArticleService;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
 import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;
@@ -13,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The class that implements the {@link ArticleService} interface.

@@ -110,24 +110,6 @@ public class ArticleValidatorImpl implements ArticleValidator {
         }
     }
 
-    /**
-     * Checks if the article exist in the system.
-     *
-     * @param articleId is the id by which the {@link Article} is to find.
-     * @return {@link Article} with the id {@param articleId} if it exist in the system.
-     * @throws EntityNotFoundException if there is no {@link Article with such an id.}
-     */
-    @Override
-    public Article checkIsArticleExistInTheSystem(long articleId) {
-        List<String> errorMessages = new ArrayList<>();
-        Optional<Article> articleToReturn = articleDao.findById(articleId);
-        if (articleToReturn.isEmpty()) {
-            errorMessages.add(translator.toLocale("ARTICLE_NOT_FOUND_WITH_ARTICLEID") + ": " + articleId);
-            throw new EntityNotFoundException(ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
-        }
-        return articleToReturn.get();
-    }
-
     private void checkArticleIsOutOfStock(Article article, List<String> errorMessages) {
         Optional<Article> articleInSystem = articleDao.findById(article.getId());
         if (articleInSystem.isPresent()) {
@@ -155,14 +137,21 @@ public class ArticleValidatorImpl implements ArticleValidator {
         }
     }
 
-//    /**
-//     * Validates articles stock.
-//     *
-//     * @param articles is the {@link List <Article>} to check for out of the stock.
-//     * @throws ArticleValidationException if the amount of ordered articles more than the amount in the stock.
-//     */
-//    @Override
-//    public void validateArticlesStock(List<Article> articles) {
-//
-//    }
+    /**
+     * Checks if the article exist in the system.
+     *
+     * @param articleId is the id by which the {@link Article} is to find.
+     * @return {@link Article} with the id {@param articleId} if it exist in the system.
+     * @throws EntityNotFoundException if there is no {@link Article with such an id.}
+     */
+    @Override
+    public Article checkIsArticleExistInTheSystem(long articleId) {
+        List<String> errorMessages = new ArrayList<>();
+        Optional<Article> articleToReturn = articleDao.findById(articleId);
+        if (articleToReturn.isEmpty()) {
+            errorMessages.add(translator.toLocale("ARTICLE_NOT_FOUND_WITH_ARTICLEID") + ": " + articleId);
+            throw new EntityNotFoundException(ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
+        }
+        return articleToReturn.get();
+    }
 }

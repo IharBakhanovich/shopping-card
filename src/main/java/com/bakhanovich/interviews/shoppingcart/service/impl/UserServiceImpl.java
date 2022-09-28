@@ -7,7 +7,6 @@ import com.bakhanovich.interviews.shoppingcart.dto.UserDto;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.service.UserService;
-import com.bakhanovich.interviews.shoppingcart.translator.Translator;
 import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;
 import com.bakhanovich.interviews.shoppingcart.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,8 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    public static final String ERROR_CODE_ENTITY_NOT_FOUND = "404";
-
     private final UserDao userDao;
     private final UserToUserDtoConverter userToUserDtoConverter;
-    private final Translator translator;
     private final ArticleValidator articleValidator;
     private final UserValidator userValidator;
     private final ArticleDao articleDao;
@@ -39,13 +35,11 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserDao userDao,
                            ArticleDao articleDao,
                            UserToUserDtoConverter userToUserDtoConverter,
-                           Translator translator,
                            ArticleValidator articleValidator,
                            UserValidator userValidator) {
         this.userDao = userDao;
         this.articleDao = articleDao;
         this.userToUserDtoConverter = userToUserDtoConverter;
-        this.translator = translator;
         this.articleValidator = articleValidator;
         this.userValidator = userValidator;
     }

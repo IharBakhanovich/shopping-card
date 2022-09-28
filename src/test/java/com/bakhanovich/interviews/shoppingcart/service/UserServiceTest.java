@@ -1,15 +1,11 @@
 package com.bakhanovich.interviews.shoppingcart.service;
 
-import com.bakhanovich.interviews.shoppingcart.converter.ArticleToArticleDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.converter.UserToUserDtoConverter;
-import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
 import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
 import com.bakhanovich.interviews.shoppingcart.dto.UserDto;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Role;
 import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.service.impl.UserServiceImpl;
-import com.bakhanovich.interviews.shoppingcart.translator.Translator;
-import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;
 import com.bakhanovich.interviews.shoppingcart.validator.UserValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,17 +30,9 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith({MockitoExtension.class})
 public class UserServiceTest {
     @Mock
-    ArticleDao articleDao;
-    @Mock
     UserDao userDao;
     @Mock
-    ArticleValidator articleValidator;
-    @Mock
     UserValidator userValidator;
-    @Mock
-    Translator translator;
-    @Mock
-    ArticleToArticleDtoConverter articleToArticleDtoConverter;
     @Mock
     UserToUserDtoConverter userToUserDtoConverter;
 

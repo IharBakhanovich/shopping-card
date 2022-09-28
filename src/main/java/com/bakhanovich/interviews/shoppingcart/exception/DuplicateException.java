@@ -3,9 +3,9 @@ package com.bakhanovich.interviews.shoppingcart.exception;
 /**
  * Exception: Thrown if a database-insertion violates a UNIQUE-constraint.
  *
- * @author Ihar Bakhanovich
+ * @author Ihar Bakhanovich.
  */
-public class DuplicateException extends AppException{
+public class DuplicateException extends AppException {
     /**
      * Constructs a new runtime exception with {@code null} as its
      * detail message.  The cause is not initialized, and may subsequently be

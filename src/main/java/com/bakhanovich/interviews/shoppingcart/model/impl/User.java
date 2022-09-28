@@ -32,7 +32,7 @@ public class User implements DatabaseEntity, Serializable {
     private String nickName;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name="role", nullable = false)
+    @Column(name = "role", nullable = false)
     private Role role;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_ordered_article",

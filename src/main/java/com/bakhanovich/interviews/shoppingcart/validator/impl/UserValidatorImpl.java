@@ -1,6 +1,5 @@
 package com.bakhanovich.interviews.shoppingcart.validator.impl;
 
-import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
 import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
 import com.bakhanovich.interviews.shoppingcart.dao.impl.ColumnNames;
 import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
@@ -23,15 +22,12 @@ import java.util.Optional;
 @Component
 public class UserValidatorImpl implements UserValidator {
     private final Translator translator;
-    private final ArticleDao articleDao;
     private final UserDao userDao;
 
     @Autowired
     public UserValidatorImpl(Translator translator,
-                             ArticleDao articleDao,
                              UserDao userDao) {
         this.translator = translator;
-        this.articleDao = articleDao;
         this.userDao = userDao;
     }
 
@@ -57,7 +53,7 @@ public class UserValidatorImpl implements UserValidator {
         List<String> errorMessages = new ArrayList<>();
         boolean hasSuchAnArticle = false;
         Article userArticle = null;
-        for (Article article: user.getArticles()) {
+        for (Article article : user.getArticles()) {
             if (article.getId() == articleId) {
                 hasSuchAnArticle = true;
                 userArticle = article;
@@ -83,7 +79,7 @@ public class UserValidatorImpl implements UserValidator {
         List<String> errorMessages = new ArrayList<>();
         Optional<User> userToAddArticles = userDao.findById(userId);
         if (userToAddArticles.isEmpty()) {
-            errorMessages.add(translator.toLocale("USER_NOT_FOUND_WITH_USERID") + " userId: "+ userId);
+            errorMessages.add(translator.toLocale("USER_NOT_FOUND_WITH_USERID") + " userId: " + userId);
             throw new EntityNotFoundException(ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND, errorMessages);
         }
         return userToAddArticles.get();

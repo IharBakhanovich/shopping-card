@@ -1,8 +1,6 @@
 package com.bakhanovich.interviews.shoppingcart.validator;
 
-import com.bakhanovich.interviews.shoppingcart.converter.ArticleToArticleDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
-import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
 import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
 import com.bakhanovich.interviews.shoppingcart.exception.MethodArgumentNotValidException;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
@@ -24,7 +22,6 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
 
 /**
  * Contains {@link UserService} tests.
@@ -36,18 +33,11 @@ public class ArticleValidatorTest {
     @Mock
     ArticleDao articleDao;
     @Mock
-    UserDao userDao;
-    @Mock
-    UserValidator userValidator;
-    @Mock
     Translator translator;
-    @Mock
-    ArticleToArticleDtoConverter articleToArticleDtoConverter;
 
     @Spy
     @InjectMocks
     ArticleValidatorImpl articleValidator;
-
 
     /**
      * The test of the validateArticle() method.
@@ -97,7 +87,6 @@ public class ArticleValidatorTest {
     @Test
     public void shouldThrowExceptionByCheckIsArticleExistsInTheSystemTest() {
         int articleId = 1;
-//        final Article article = new Article(1L, BigDecimal.valueOf(1.99), 1, 0);
         given(translator.toLocale(any())).willReturn("test");
         given(articleDao.findById(articleId)).willReturn(Optional.empty());
         Assertions.assertThrows(EntityNotFoundException.class,

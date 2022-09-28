@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -60,13 +59,13 @@ public class UserDaoImpl implements UserDao {
             = "insert into app_user (nickName, role, password) values (?, ?, ?)";
     private static final String DELETE_ENTITY_BY_ID_SQL = "delete from app_user where id = ?";
 
-    private EntityManager entityManager;
-    private JdbcTemplate jdbcTemplate;
-    private UserExtractor userExtractor;
+    //    private EntityManager entityManager;
+    private final JdbcTemplate jdbcTemplate;
+    private final UserExtractor userExtractor;
 
     @Autowired
-    public UserDaoImpl(EntityManager entityManager, JdbcTemplate jdbcTemplate, UserExtractor userExtractor) {
-        this.entityManager = entityManager;
+    public UserDaoImpl(JdbcTemplate jdbcTemplate,
+                       UserExtractor userExtractor) {
         this.jdbcTemplate = jdbcTemplate;
         this.userExtractor = userExtractor;
     }
@@ -79,7 +78,6 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public void save(User user) {
-//        entityManager.persist(user);
         jdbcTemplate.update(INSERT_ENTITY_SQL,
                 user.getNickName(),
                 user.getRole(),
@@ -191,10 +189,6 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public void delete(long id) {
-//        entityManager
-//                .createQuery("delete from user u where u.id = :id")
-//                .setParameter("id", id)
-//                .executeUpdate();
         jdbcTemplate.update(DELETE_ENTITY_BY_ID_SQL, id);
     }
 

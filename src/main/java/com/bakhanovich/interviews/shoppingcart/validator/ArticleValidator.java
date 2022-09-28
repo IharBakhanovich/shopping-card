@@ -26,16 +26,10 @@ public interface ArticleValidator {
 
     /**
      * Checks if the article exist in the system.
+     *
      * @param articleId is the id by which the {@link Article} is to find.
      * @return {@link Article} with the id {@param articleId} if it exist in the system.
      * @throws EntityNotFoundException if there is no {@link Article with such an id.}
      */
     Article checkIsArticleExistInTheSystem(long articleId);
-
-//    /**
-//     * Validates articles stock.
-//     * @param articles is the {@link List<Article>} to check for out of the stock.
-//     * @throws ArticleValidationException if the amount of ordered articles more than the amount in the stock.
-//     */
-//    void validateArticlesStock(List<Article> articles);
 }

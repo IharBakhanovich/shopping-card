@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class UserExtractor implements ResultSetExtractor<List<User>> {
 
-    private RowMapper<Article> articleRowMapper;
+    private final RowMapper<Article> articleRowMapper;
 
     @Autowired
     public UserExtractor(RowMapper<Article> articleRowMapper) {

@@ -2,13 +2,10 @@ package com.bakhanovich.interviews.shoppingcart.service;
 
 import com.bakhanovich.interviews.shoppingcart.converter.ArticleToArticleDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
-import com.bakhanovich.interviews.shoppingcart.dao.UserDao;
 import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.service.impl.ArticleServiceImpl;
-import com.bakhanovich.interviews.shoppingcart.translator.Translator;
 import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;
-import com.bakhanovich.interviews.shoppingcart.validator.UserValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,13 +35,7 @@ public class ArticleServiceTest {
     @Mock
     ArticleDao articleDao;
     @Mock
-    UserDao userDao;
-    @Mock
     ArticleValidator articleValidator;
-    @Mock
-    UserValidator userValidator;
-    @Mock
-    Translator translator;
     @Mock
     ArticleToArticleDtoConverter articleToArticleDtoConverter;
 
