@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Adds article to {@link User} and returns user with all his articles.
      *
-     * @param userId   is the id of the {@link User} to whom an {@link List<Article>} should be added.
+     * @param userId        is the id of the {@link User} to whom an {@link List<Article>} should be added.
      * @param articlesToAdd is all the articles, that should be added to user
      * @return {@link UserDto}, i.e. a {@link User} with all his articles and with the total costs of all his articles.
      */

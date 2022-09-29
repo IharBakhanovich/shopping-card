@@ -74,16 +74,21 @@ public class UserDaoImpl implements UserDao {
      *
      * @param user is the {@link User} to save.
      * @throws DuplicateException if a SQLException with the state 23505 or the state 23000 is thrown.
+     * TODO after the service 'update' method will be written, this dao method should be reconstructed. Here articles should not updated
      */
     @Override
     public void save(User user) {
         jdbcTemplate.update(INSERT_ENTITY_SQL,
                 user.getNickName(),
-                user.getRole(),
+                user.getRole().getId(),
                 user.getPassword());
-        for (Article article : user.getArticles()) {
-            updateArticleBookedByUser(user.getId(), article);
-        }
+//        if (user.getArticles() != null) {
+//            if (user.getArticles().size() != 0) {
+//                for (Article article : user.getArticles()) {
+//                    updateArticleBookedByUser(user.getId(), article);
+//                }
+//            }
+//        }
     }
 
     /**
@@ -119,9 +124,9 @@ public class UserDaoImpl implements UserDao {
     public void update(User user) {
         jdbcTemplate.update(UPDATE_ENTITY_SQL,
                 user.getNickName(),
-                user.getRole(),
+                user.getRole().getId(),
                 user.getId());
-        updateUserArticles(user);
+//        updateUserArticles(user);
     }
 
     private void updateUserArticles(User user) {

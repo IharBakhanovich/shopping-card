@@ -1,14 +1,14 @@
 package com.bakhanovich.interviews.shoppingcart.dao;
 
-import com.bakhanovich.interviews.shoppingcart.configuration.TestConfig;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MySQLContainer;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,9 +19,8 @@ import java.util.Optional;
  *
  * @author Ihar Bakhanovich.
  */
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestConfig.class, loader = AnnotationConfigContextLoader.class)
-public class ArticleDaoTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+public class ArticleDaoTest extends ShoppingCartIntegrationTest {
 
     @Autowired
     private ArticleDao articleDao;
