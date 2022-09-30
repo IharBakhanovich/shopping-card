@@ -16,7 +16,8 @@ import java.util.Optional;
  * @author Ihar Bakhanovich.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class UserDaoTest extends ShoppingCartIntegrationTest {
+// without 'extends ShoppingCartIntegrationTest' in works much faster
+public class UserDaoTest {
 
     @Autowired
     private UserDao userDao;

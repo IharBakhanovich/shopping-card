@@ -20,7 +20,8 @@ import java.util.Optional;
  * @author Ihar Bakhanovich.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class ArticleDaoTest extends ShoppingCartIntegrationTest {
+// without 'extends ShoppingCartIntegrationTest' in works much faster
+public class ArticleDaoTest {
 
     @Autowired
     private ArticleDao articleDao;
