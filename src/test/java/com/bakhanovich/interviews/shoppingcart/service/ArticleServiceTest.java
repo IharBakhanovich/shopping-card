@@ -85,7 +85,6 @@ public class ArticleServiceTest {
     public void updateArticleTest() {
         final Article article1 = new Article(1L, BigDecimal.valueOf(1.99), 1, 2);
         final ArticleDto articleDto1 = new ArticleDto(1L, BigDecimal.valueOf(1.99), 1);
-        //todo write ArticleValidatorTest
         Mockito.doNothing().when(articleValidator).validateArticle(article1);
         when(articleDao.findById(article1.getId())).thenReturn(Optional.of(article1));
         given(articleToArticleDtoConverter.convert(article1)).willReturn(articleDto1);

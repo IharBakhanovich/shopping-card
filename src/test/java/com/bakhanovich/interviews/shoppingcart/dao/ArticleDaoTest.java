@@ -2,13 +2,9 @@ package com.bakhanovich.interviews.shoppingcart.dao;
 
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MySQLContainer;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,7 +16,8 @@ import java.util.Optional;
  * @author Ihar Bakhanovich.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-// without 'extends ShoppingCartIntegrationTest' in works much faster
+// without 'extends ShoppingCartIntegrationTest' it works much faster and uses h2 embedded database.
+// with the 'extends ShoppingCartIntegrationTest' it uses docker and that is why the docker should be in operation.
 public class ArticleDaoTest {
 
     @Autowired
@@ -67,6 +64,9 @@ public class ArticleDaoTest {
         Assertions.assertFalse(article.isPresent());
     }
 
+    /**
+     * The test of the save() method.
+     */
     @Test
     public void testSave() {
         Article article = new Article(6L, BigDecimal.valueOf(1.22f), 100, 2);

@@ -16,7 +16,8 @@ import java.util.Optional;
  * @author Ihar Bakhanovich.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-// without 'extends ShoppingCartIntegrationTest' in works much faster
+// without 'extends ShoppingCartIntegrationTest' it works much faster and uses h2 embedded database.
+// with the 'extends ShoppingCartIntegrationTest' it uses docker and that is why the docker should be in operation.
 public class UserDaoTest {
 
     @Autowired
