@@ -18,6 +18,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * @project ShoppingCart
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+// if the container will start in the cloud in case of application.properties line10 is available
 //@Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 //@Sql({"classpath:sql/create_db.sql", "classpath:sql/insert_data.sql"})
@@ -35,7 +36,9 @@ public class ShoppingCartIntegrationTest {
 
     // 'static' allow us to create a one DB for all tests in this class.
     // Remove '@Container' and '@Testcontainers' to not allow testcontainers to manage container.
-//    @Container
+
+    //if the cloud container is not in use we should recomment 41-59
+    @Container
     private static MySQLContainer container = (MySQLContainer) new MySQLContainer("mysql:8.0.30")
             .withDatabaseName("testsqldb")
             .withUsername("test")

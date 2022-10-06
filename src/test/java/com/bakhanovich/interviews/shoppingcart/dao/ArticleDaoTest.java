@@ -18,7 +18,7 @@ import java.util.Optional;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 // without 'extends ShoppingCartIntegrationTest' it works much faster and uses h2 embedded database.
 // with the 'extends ShoppingCartIntegrationTest' it uses docker and that is why the docker should be in operation.
-public class ArticleDaoTest {
+public class ArticleDaoTest extends ShoppingCartIntegrationTest {
 
     @Autowired
     private ArticleDao articleDao;
