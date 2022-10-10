@@ -24,6 +24,7 @@ public class ArticleValidatorImpl implements ArticleValidator {
 
     public static final String ERROR_CODE_METHOD_ARGUMENT_NOT_VALID = "400";
     public static final String ERROR_CODE_ARTICLE_NOT_VALID = "02";
+    public static final String ARTICLE_ID = "articleId ";
 
     private final Translator translator;
     private final ArticleDao articleDao;
@@ -65,17 +66,17 @@ public class ArticleValidatorImpl implements ArticleValidator {
 
     private void checkFieldIsMoreThanZero(long articleId, List<String> errorMessages, float value, String errorMessage) {
         if (value < 0 || value == 0) {
-            errorMessages.add("articleId " + articleId + ": " + translator.toLocale(errorMessage));
+            errorMessages.add(ARTICLE_ID + articleId + ": " + translator.toLocale(errorMessage));
         }
     }
 
     private void checkEmptyFields(Article article, List<String> errorMessages) {
         if (article.getPreis() == null) {
-            errorMessages.add("articleId " + article.getId() + ": "
+            errorMessages.add(ARTICLE_ID + article.getId() + ": "
                     + translator.toLocale("THE_PRICE_FIELD_SHOULD_NOT_BE_EMPTY"));
         }
         if (article.getMinAmount() == 0) {
-            errorMessages.add("articleId " + article.getId() + ": "
+            errorMessages.add(ARTICLE_ID + article.getId() + ": "
                     + translator.toLocale("THE_MIN_AMOUNT_FIELD_SHOULD_NOT_BE_EMPTY"));
         }
         checkAmountFieldIsNotEmpty(article, errorMessages);
@@ -83,7 +84,7 @@ public class ArticleValidatorImpl implements ArticleValidator {
 
     private void checkAmountFieldIsNotEmpty(Article article, List<String> errorMessages) {
         if (article.getAmount() == 0) {
-            errorMessages.add("articleId " + article.getId() + ": "
+            errorMessages.add(ARTICLE_ID + article.getId() + ": "
                     + translator.toLocale("THE_AMOUNT_FIELD_SHOULD_NOT_BE_EMPTY"));
         }
     }
@@ -112,27 +113,28 @@ public class ArticleValidatorImpl implements ArticleValidator {
 
     private void checkArticleIsOutOfStock(Article article, List<String> errorMessages) {
         Optional<Article> articleInSystem = articleDao.findById(article.getId());
-        if (articleInSystem.isPresent()) {
-            // check two cases: amount to book should be less than the existing amount in stock
-            // and the existing amount should be not less than minAmount to book.
-            if (article.getAmount() > articleInSystem.get().getAmount()
-                    || articleInSystem.get().getMinAmount() > articleInSystem.get().getAmount()) {
-                errorMessages.add("articleId " + article.getId() + ": "
-                        + translator.toLocale("ARTICLE_IS_OUT_OF_STOCK"));
-            }
+        if (articleInSystem.isEmpty()) {
+            return;
+        }
+        // check two cases: amount to book should be less than the existing amount in stock
+        // and the existing amount should be not less than minAmount to book.
+        if (article.getAmount() > articleInSystem.get().getAmount()
+                || articleInSystem.get().getMinAmount() > articleInSystem.get().getAmount()) {
+            errorMessages.add(ARTICLE_ID + article.getId() + ": "
+                    + translator.toLocale("ARTICLE_IS_OUT_OF_STOCK"));
         }
     }
 
     private void checkArticleExistInTheSystem(Article article, List<String> errorMessages) {
         if (articleDao.findById(article.getId()).isEmpty()) {
-            errorMessages.add("articleId " + article.getId() + ": "
+            errorMessages.add(ARTICLE_ID + article.getId() + ": "
                     + translator.toLocale("ARTICLE_DOES_NOT_EXIST_IN_SYSTEM"));
         }
     }
 
     private void checkIdFieldIsMoreThanZero(Article article, List<String> errorMessages) {
         if (article.getId() < 0 || article.getId() == 0) {
-            errorMessages.add("articleId " + article.getId() + ": "
+            errorMessages.add(ARTICLE_ID + article.getId() + ": "
                     + translator.toLocale("THE_AMOUNT_FIELD_SHOULD_NOT_BE_EMPTY"));
         }
     }

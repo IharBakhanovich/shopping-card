@@ -1,4 +1,4 @@
-package com.bakhanovich.interviews.shoppingcart.exceptionHandler;
+package com.bakhanovich.interviews.shoppingcart.exception_handler;
 
 import com.bakhanovich.interviews.shoppingcart.exception.DuplicateException;
 import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;

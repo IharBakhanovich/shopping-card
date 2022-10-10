@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The class that implements the {@link ArticleService} interface.
@@ -66,6 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleDto updateArticle(Article article) {
         articleValidator.validateArticle(article);
         articleDao.update(article);
-        return articleToArticleDtoConverter.convert(articleDao.findById(article.getId()).get());
+        Optional<Article> articleAfterUpdate = articleDao.findById(article.getId());
+        return articleAfterUpdate.map(articleToArticleDtoConverter::convert).orElse(null);
     }
 }

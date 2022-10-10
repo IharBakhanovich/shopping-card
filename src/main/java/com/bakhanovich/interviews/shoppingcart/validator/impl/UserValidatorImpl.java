@@ -38,7 +38,8 @@ public class UserValidatorImpl implements UserValidator {
      */
     @Override
     public void validateUser(User user) {
-
+        //this method is to be done later if the application will be developed further
+        throw new UnsupportedOperationException();
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.bakhanovich.interviews.shoppingcart.exceptionHandler;
+package com.bakhanovich.interviews.shoppingcart.exception_handler;
 
 /**
  * The class to contain all the exception data.
@@ -11,6 +11,7 @@ public class ExceptionData {
      * Constructs the {@link ExceptionData}.
      */
     public ExceptionData() {
+        //the empty constructor
     }
 
     /**
