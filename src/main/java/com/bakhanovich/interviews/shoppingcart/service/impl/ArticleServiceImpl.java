@@ -2,7 +2,9 @@ package com.bakhanovich.interviews.shoppingcart.service.impl;
 
 import com.bakhanovich.interviews.shoppingcart.converter.ArticleToArticleDtoConverter;
 import com.bakhanovich.interviews.shoppingcart.dao.ArticleDao;
+import com.bakhanovich.interviews.shoppingcart.dao.impl.ColumnNames;
 import com.bakhanovich.interviews.shoppingcart.dto.ArticleDto;
+import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException;
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.service.ArticleService;
 import com.bakhanovich.interviews.shoppingcart.translator.Translator;
@@ -22,7 +24,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class ArticleServiceImpl implements ArticleService {
-    public static final String ERROR_CODE_ENTITY_NOT_FOUND = "404";
 
     private final ArticleDao articleDao;
     private final ArticleValidator articleValidator;
@@ -68,6 +69,12 @@ public class ArticleServiceImpl implements ArticleService {
         articleValidator.validateArticle(article);
         articleDao.update(article);
         Optional<Article> articleAfterUpdate = articleDao.findById(article.getId());
-        return articleAfterUpdate.map(articleToArticleDtoConverter::convert).orElse(null);
+        if (articleAfterUpdate.isPresent()) {
+            return articleToArticleDtoConverter.convert(articleAfterUpdate.get());
+        } else {
+            throw new EntityNotFoundException(
+                    String.format(translator.toLocale("THERE_IS_NO_ARTICLE_WITH_THE_ID"), article.getId()),
+                    ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND);
+        }
     }
 }

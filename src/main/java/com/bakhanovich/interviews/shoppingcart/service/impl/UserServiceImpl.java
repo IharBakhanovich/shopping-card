@@ -9,6 +9,7 @@ import com.bakhanovich.interviews.shoppingcart.exception.EntityNotFoundException
 import com.bakhanovich.interviews.shoppingcart.model.impl.Article;
 import com.bakhanovich.interviews.shoppingcart.model.impl.User;
 import com.bakhanovich.interviews.shoppingcart.service.UserService;
+import com.bakhanovich.interviews.shoppingcart.translator.Translator;
 import com.bakhanovich.interviews.shoppingcart.validator.ArticleValidator;
 import com.bakhanovich.interviews.shoppingcart.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,12 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    public static final String ARTICLE_WITH_THE_ID_DOES_NOT_EXIST_IN_THE_SYSTEM = "Article with the id = ? does not exist in the system";
     private final UserDao userDao;
     private final UserToUserDtoConverter userToUserDtoConverter;
     private final ArticleValidator articleValidator;
     private final UserValidator userValidator;
     private final ArticleDao articleDao;
+    private final Translator translator;
 
 
     @Autowired
@@ -40,12 +41,14 @@ public class UserServiceImpl implements UserService {
                            ArticleDao articleDao,
                            UserToUserDtoConverter userToUserDtoConverter,
                            ArticleValidator articleValidator,
-                           UserValidator userValidator) {
+                           UserValidator userValidator,
+                           Translator translator) {
         this.userDao = userDao;
         this.articleDao = articleDao;
         this.userToUserDtoConverter = userToUserDtoConverter;
         this.articleValidator = articleValidator;
         this.userValidator = userValidator;
+        this.translator = translator;
     }
 
     /**
@@ -68,7 +71,17 @@ public class UserServiceImpl implements UserService {
         List<Article> userArticles = checkUserAndArticlesAndGetUserArticles(userId, articlesToAdd);
         addArticlesToUser(userId, articlesToAdd, userArticles);
         Optional<User> userWhomArticlesWereAdded = userDao.findById(userId);
-        return userWhomArticlesWereAdded.map(userToUserDtoConverter::convert).orElse(null);
+        return getUserDtoFromOptionalUser(userId, userWhomArticlesWereAdded);
+    }
+
+    private UserDto getUserDtoFromOptionalUser(long userId, Optional<User> userWhomArticlesWereAdded) {
+        if (userWhomArticlesWereAdded.isPresent()) {
+            return userToUserDtoConverter.convert(userWhomArticlesWereAdded.get());
+        } else {
+            throw new EntityNotFoundException(
+                    String.format(translator.toLocale("THERE_IS_NO_USER_WITH_THE_ID"), userId),
+                    ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND);
+        }
     }
 
     private List<Article> checkUserAndArticlesAndGetUserArticles(long userId, List<Article> articlesToAdd) {
@@ -99,8 +112,8 @@ public class UserServiceImpl implements UserService {
         Optional<Article> optionalArticleFromTheSystem = articleDao.findById(article.getId());
         if (optionalArticleFromTheSystem.isEmpty()) {
             throw new EntityNotFoundException(
-                    String.format(ARTICLE_WITH_THE_ID_DOES_NOT_EXIST_IN_THE_SYSTEM, article.getId()),
-                    ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND);
+                    String.format(translator.toLocale("THERE_IS_NO_ARTICLE_WITH_THE_ID"), article.getId()),
+                            ColumnNames.ERROR_CODE_ENTITY_NOT_FOUND);
         }
         return optionalArticleFromTheSystem.get();
     }
@@ -123,6 +136,7 @@ public class UserServiceImpl implements UserService {
                 return article;
             }
         }
+        // here the "null" returning is valide because it is the private method
         return null;
     }
 
@@ -135,7 +149,7 @@ public class UserServiceImpl implements UserService {
     public UserDto fetchUserById(long userId) {
         userValidator.checkIsUserExistsInTheSystem(userId);
         Optional<User> user = userDao.findById(userId);
-        return user.map(userToUserDtoConverter::convert).orElse(null);
+        return getUserDtoFromOptionalUser(userId, user);
     }
 
     /**
